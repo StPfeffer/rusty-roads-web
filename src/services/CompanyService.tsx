@@ -1,0 +1,13 @@
+import axios from 'axios';
+
+export const axiosInstance = axios.create({
+    baseURL: "http://localhost:8080/api"
+})
+
+export class CompanyService {
+
+    get() {
+        return axiosInstance.get("/v1/empresa/12345678901234")
+    }
+
+}
