@@ -1,11 +1,10 @@
-import Sidebar from "@/components/sidebar/Sidebar";
-import Company from "./company/Company";
+import React from "react";
+import Dashboard from "./dashboard/page";
 
-export default function Home() {
+const Homepage = () => {
   return (
-    <>
-      <Sidebar />
-      {/* Company() */}
-    </>
-  );
+    <Dashboard />
+  )
 }
+
+export default Homepage;
