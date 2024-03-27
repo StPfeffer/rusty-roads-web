@@ -5,8 +5,8 @@ import type { Metadata } from "next";
 
 import "../styles/globals.css";
 import styles from "../components/dashboard/dashboard.module.css";
-import Sidebar from "@/components/sidebar/sidebar";
 import Navbar from "@/components/navbar/navbar";
+import Sidebar from "@/components/sidebar/Sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
