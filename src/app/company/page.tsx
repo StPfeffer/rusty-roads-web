@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { CompanyService } from "@/services/CompanyService";
 
 const Company = () => {
-  const [company, setCompany] = useState<Company>();
+  const [company, setCompany] = useState<Empresa>();
 
   useEffect(() => {
     const fetchData = async () => {
