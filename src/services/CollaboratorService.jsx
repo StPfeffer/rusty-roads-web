@@ -4,10 +4,10 @@ export const axiosInstance = axios.create({
     baseURL: "http://localhost:8080/api"
 })
 
-export class CompanyService {
+export class CollaboratorService {
 
     get() {
-        return axiosInstance.get("/v1/empresa/12345678901234")
+        return axiosInstance.get("/v1/colaboradores")
     }
 
 }
