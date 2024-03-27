@@ -1,7 +1,8 @@
+import { BASE_URL } from '@/config/url';
 import axios from 'axios';
 
 export const axiosInstance = axios.create({
-    baseURL: "http://localhost:8080/api"
+    baseURL: BASE_URL
 })
 
 export class CollaboratorService {
