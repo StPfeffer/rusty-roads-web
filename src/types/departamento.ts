@@ -1,6 +1,6 @@
 interface Departamento {
-    nome: String,
-    descricao: String,
-    ativo: Boolean,
+    nome: string,
+    descricao: string,
+    ativo: boolean,
     empresa: Empresa
 }

@@ -7,8 +7,16 @@ export const axiosInstance = axios.create({
 
 export class CollaboratorService {
 
-    get() {
-        return axiosInstance.get("/v1/colaboradores")
+    list() {
+        return axiosInstance.get("/v1/colaboradores");
+    }
+
+    findById(id: number) {
+        return axiosInstance.get("/v1/colaboradores/" + id);
+    }
+
+    update(id: number, data: object) {
+        return axiosInstance.post("/v1/colaboradores/" + id, data);
     }
 
 }
