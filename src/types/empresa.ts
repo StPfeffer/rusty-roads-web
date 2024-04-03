@@ -1,9 +1,9 @@
 interface Empresa {
-  cnpj: String;
-  razaoSocial: String;
-  nomeFantasia: String;
-  endereco: String;
-  regimeTributario: String;
-  inscricaoEstadual: String;
-  inscricaoMunicipal: String;
+  cnpj: string;
+  razaoSocial: string;
+  nomeFantasia: string;
+  endereco: string;
+  regimeTributario: string;
+  inscricaoEstadual: string;
+  inscricaoMunicipal: string;
 }

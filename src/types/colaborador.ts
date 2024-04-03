@@ -1,8 +1,11 @@
 interface Colaborador {
-    cpf: String,
-    rg: String,
-    cnh: String,
-    nome: String,
+    id: number,
+    cpf: string,
+    rg: string,
+    cnh: string,
+    nome: string,
+    email: string,
     admissao: Date,
-    genero: String
+    genero: string,
+    cargo: Cargo
 }
