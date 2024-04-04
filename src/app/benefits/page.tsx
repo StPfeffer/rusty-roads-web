@@ -18,6 +18,8 @@ const Benefit = () => {
         console.log (error);
       }
     }
+
+    fetchData();
   })
 
   return (
