@@ -7,9 +7,9 @@ import { cards } from "../../db/dummy/cards/data";
 
 const Dashboard = () => {
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.main}>
-        <div className={styles.cards}>
+    <div className="flex gap-5 mt-5">
+      <div className="flex flex-[3] flex-col gap-5 mt-5">
+        <div className="flex gap-5 justify-between">
           {cards.map((item) => (
             <Card item={item} key={item.id} />
           ))}
@@ -21,7 +21,7 @@ const Dashboard = () => {
         {/* <Chart /> */}
       </div>
 
-      <div className={styles.side}>
+      <div className="flex-1">
         {/* <Rightbar /> */}
       </div>
     </div>
