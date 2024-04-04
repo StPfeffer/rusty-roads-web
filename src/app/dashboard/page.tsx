@@ -1,7 +1,6 @@
 import React from "react";
 
 import Card from "@/components/dashboard/card/card";
-import styles from "../../components/dashboard/dashboard.module.css";
 import Transactions from "@/components/dashboard/transactions/transactions";
 import { cards } from "../../db/dummy/cards/data";
 
