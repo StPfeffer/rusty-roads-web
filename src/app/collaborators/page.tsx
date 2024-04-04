@@ -9,33 +9,33 @@ const UsersPage = async () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.top}>
+      <div className="flex justify-between items-center">
         <Link href="/collaborators/add">
           <button className={styles.addButton}>Adicionar</button>
         </Link>
       </div>
-      <table className={styles.table}>
+      <table className="w-full">
         <thead>
           <tr>
-            <td>Nome</td>
-            <td>Email</td>
-            <td>Admissão</td>
-            <td>Cargo</td>
-            <td>Status</td>
-            <td>Action</td>
+            <td className="pt-2.5">Nome</td>
+            <td className="pt-2.5">Email</td>
+            <td className="pt-2.5">Admissão</td>
+            <td className="pt-2.5">Cargo</td>
+            <td className="pt-2.5">Status</td>
+            <td className="pt-2.5">Action</td>
           </tr>
         </thead>
         <tbody>
           {collaborators.map((collaborator) => (
             <tr key={collaborator.id}>
               <td>
-                <div className={styles.user}>
+                <div className="flex items-center gap-2.5">
                   <Image
                     src={"/noavatar.png"}
                     alt=""
                     width={40}
                     height={40}
-                    className={styles.userImage}
+                    className="round object-cover"
                   />
                   {collaborator.nome}
                 </div>
@@ -46,7 +46,7 @@ const UsersPage = async () => {
               {/* <td>{collaborator.isActive ? "active" : "passive"}</td> */}
               <td>{/*collaborator.cargo.descricao  */} teste</td>
               <td>
-                <div className={styles.buttons}>
+                <div className="flex gap-2.5">
                   <Link href={`/collaborators/${collaborator.id}`}>
                     <button className={`${styles.button} ${styles.view}`}>
                       Detalhes
