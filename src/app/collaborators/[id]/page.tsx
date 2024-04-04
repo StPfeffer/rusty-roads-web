@@ -1,4 +1,4 @@
-import { fetchCollaborator } from "@/actions/fetchCollaborators";
+import { fetchCollaborator } from "@/actions/colaboradores/fetchCollaborators";
 import styles from "../../../components/collaborator/singleCollaborator/singleCollaborator.module.css";
 import Image from "next/image";
 // import { updateCollaborator } from "@/actions/updateCollaborator";

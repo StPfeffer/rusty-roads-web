@@ -1,4 +1,4 @@
-import { fetchCollaborators } from "@/actions/fetchCollaborators";
+import { fetchCollaborators } from "@/actions/colaboradores/fetchCollaborators";
 import styles from "../../components/collaborator/collaborators.module.css";
 import Image from "next/image";
 import Link from "next/link";
@@ -44,7 +44,7 @@ const UsersPage = async () => {
               <td>{formatarData(collaborator.admissao?.toString())}</td>
               {/* <td>{collaborator.isAdmin ? "Admin" : "Client"}</td> */}
               {/* <td>{collaborator.isActive ? "active" : "passive"}</td> */}
-              <td>{collaborator.cargo.nome}</td>
+              <td>{/*collaborator.cargo.descricao  */} teste</td>
               <td>
                 <div className={styles.buttons}>
                   <Link href={`/collaborators/${collaborator.id}`}>
