@@ -7,5 +7,5 @@ interface Colaborador {
     email: string,
     admissao: Date,
     genero: string,
-    cargo: Cargo
+    contrato: Contrato
 }
