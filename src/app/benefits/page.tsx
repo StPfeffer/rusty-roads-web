@@ -1,6 +1,11 @@
 "use client";
 import { BenefitService } from "@/services/BenefitService";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import styles from "../../components/collaborator/collaborators.module.css";
+
+
 
 
 const Benefit = () => {
@@ -24,7 +29,44 @@ const Benefit = () => {
 
   return (
     <div className="mt-12 w-full ">
-      <table className="w-full ring-1  ring-slate-600 rounded-lg">
+      <div className={styles.container}>
+      <div className="flex justify-between items-center">
+        <Link href="/collaborators/add">
+          <button className={styles.addButton}>Adicionar</button>
+        </Link>
+      </div>
+      <table className="w-full">
+        <thead>
+          <tr className="">
+            <td className="pt-2.5 font-bold p-2">Nome</td>
+            <td className="pt-2.5 font-bold p-2">Descrição</td>
+            <td className="pt-2.5 font-bold p-2">Valor Padrão</td>
+            <td className="pt-2.5 font-bold p-2">Ativo</td>
+            <td className="pt-2.5 font-bold p-2 ">Status</td>
+          </tr>
+        </thead>
+        <tbody>
+          {benefits.map((benefit) => (
+            <tr>
+              <td className="p-2">{benefit.nome}</td>
+              <td className="p-2">{benefit.descricao}</td>
+              <td className="p-2">{benefit.valorPadrao}</td>
+              <td className="p-2">{benefit.ativo ? "Ativo" : "Inativo"}</td>
+              <td className="p-2">
+                <div className="flex gap-2.5">
+                  <Link href={`/collaborators/${benefit.codigo}`}>
+                    <button className={`${styles.button} ${styles.view}`}>
+                      Detalhes
+                    </button>
+                  </Link>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+      {/* <table className="w-full ring-1  ring-slate-600 rounded-lg">
         <thead>
         <tr className="">
             <th className="py-1 overflow-hidden bg-slate-600 rounded-tl-lg w-32">Código</th>
@@ -59,7 +101,7 @@ const Benefit = () => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
     </div>
   )
 }
