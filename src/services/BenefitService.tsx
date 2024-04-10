@@ -7,8 +7,15 @@ export const axiosInstance = axios.create({
 
 export class BenefitService {
 
-    get() {
+    list() {
         return axiosInstance.get("/v1/beneficios")
     }
 
+    findById(id: number) {
+        return axiosInstance.get("/v1/beneficios/" + id);
+    }
+
+    update(id: number, data: object) {
+        return axiosInstance.post("/v1/beneficios/" + id, data);
+    }
 }
