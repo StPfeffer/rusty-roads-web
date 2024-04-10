@@ -16,7 +16,7 @@ const Benefit = () => {
       const benefitService = new BenefitService();
 
       try {
-        const response = await benefitService.get();
+        const response = await benefitService.list();
         setBenefits(response.data);
 
       } catch (error) {
@@ -28,7 +28,7 @@ const Benefit = () => {
   })
 
   return (
-    <div className="mt-12 w-full ">
+    <div className="w-full ">
       <div className={styles.container}>
       <div className="flex justify-between items-center">
         <Link href="/collaborators/add">
