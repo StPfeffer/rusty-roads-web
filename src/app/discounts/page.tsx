@@ -1,53 +1,59 @@
-import styles from "../../components/collaborator/collaborators.module.css";
+"use client";
+import { BenefitService } from "@/services/BenefitService";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { formatarData } from "@/utils/formatarData";
+import styles from "../../components/collaborator/collaborators.module.css";
+import { DiscountService} from '@/services/DiscountService';
 
-import React from "react";
-import { fetchDiscounts } from "@/actions/descontos/fetchDiscounts";
 
-const DiscountsPage = async () => {
-  const discounts = await fetchDiscounts();
+
+
+const Discount = () => {
+  const [discounts, setDiscounts] = useState<Desconto[]>([]);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      const discountService = new DiscountService();
+
+      try {
+        const response = await discountService.list();
+        setDiscounts(response.data);
+
+      } catch (error) {
+        console.log (error);
+      }
+    }
+
+    fetchData();
+  })
 
   return (
-    <div className={styles.container}>
-      <div className={styles.top}>
-        <button className={styles.addButton}>Adicionar</button>
+    <div className="w-full ">
+      <div className={styles.container}>
+      <div className="flex justify-between items-center">
+        <Link href="/collaborators/add">
+          <button className={styles.addButton}>Adicionar</button>
+        </Link>
       </div>
-      <table className={styles.table}>
+      <table className="w-full">
         <thead>
-          <tr>
-            <td>Nome</td>
-            <td>Email</td>
-            <td>Admissão</td>
-            <td>Cargo</td>
-            <td>Status</td>
-            <td>Action</td>
+          <tr className="">
+            <td className="pt-2.5 font-bold p-2">Nome</td>
+            <td className="pt-2.5 font-bold p-2">Descrição</td>
+            <td className="pt-2.5 font-bold p-2">Ativo</td>
+            <td className="pt-2.5 font-bold p-2 ">Status</td>
           </tr>
         </thead>
         <tbody>
-          {collaborators.map((collaborator) => (
-            <tr key={collaborator.id}>
-              <td>
-                <div className={styles.user}>
-                  <Image
-                    src={"/noavatar.png"}
-                    alt=""
-                    width={40}
-                    height={40}
-                    className={styles.userImage}
-                  />
-                  {collaborator.nome}
-                </div>
-              </td>
-              <td>{collaborator.email}</td>
-              <td>{formatarData(collaborator.admissao?.toString())}</td>
-              {/* <td>{collaborator.isAdmin ? "Admin" : "Client"}</td> */}
-              {/* <td>{collaborator.isActive ? "active" : "passive"}</td> */}
-              <td>{/*collaborator.cargo.descricao  */} teste</td>
-              <td>
-                <div className={styles.buttons}>
-                  <Link href={`/collaborators/${collaborator.id}`}>
+          {discounts.map((discount) => (
+            <tr>
+              <td className="p-2">{discount.nome}</td>
+              <td className="p-2">{discount.descricao}</td>
+              <td className="p-2">{discount.ativo ? "Ativo" : "Inativo"}</td>
+              <td className="p-2">
+                <div className="flex gap-2.5">
+                  <Link href={`/collaborators/${discount.codigo}`}>
                     <button className={`${styles.button} ${styles.view}`}>
                       Detalhes
                     </button>
@@ -59,7 +65,44 @@ const DiscountsPage = async () => {
         </tbody>
       </table>
     </div>
+      {/* <table className="w-full ring-1  ring-slate-600 rounded-lg">
+        <thead>
+        <tr className="">
+            <th className="py-1 overflow-hidden bg-slate-600 rounded-tl-lg w-32">Código</th>
+            <th className="py-1 overflow-hidden bg-slate-600 min-w-32">Nome</th>
+            <th className="py-1 overflow-hidden bg-slate-600 min-w-32">Descrição</th>
+            <th className="py-1 overflow-hidden bg-slate-600 w-32">Valor Padrão</th>
+            <th className="py-1 overflow-hidden bg-slate-600 w-32">Ativo</th>
+            <th className="py-1 overflow-hidden bg-slate-600 rounded-tr-lg w-24">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="">
+              <td className="p-2">t</td>
+              <td className="p-2">t</td>
+              <td className="p-2">t</td>
+              <td className="p-2">t</td>
+              <td className="p-2">t</td>
+              <td className="p-2 flex justify-end">
+                <button className="flex items-center bg-slate-800 hover:bg-slate-700 text-white rounded p-1 px-2">🖊</button>
+              </td>
+            </tr>
+          {benefits.map(benefit => (
+            <tr className="">
+              <td className="p-2">{benefit.codigo}</td>
+              <td className="p-2">{benefit.nome}</td>
+              <td className="p-2">{benefit.descricao}</td>
+              <td className="p-2">{benefit.valorPadrão}</td>
+              <td className="p-2">{benefit.ativo.toString()}</td>
+              <td className="p-2 flex justify-end">
+                <button className="flex items-center bg-slate-800 hover:bg-slate-700 text-white rounded p-1 px-2">🖊</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table> */}
+    </div>
   )
 }
 
-export default Discounts;
+export default Discount;
