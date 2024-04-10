@@ -17,35 +17,35 @@ const UsersPage = async () => {
       <table className="w-full">
         <thead>
           <tr>
-            <td className="pt-2.5">Nome</td>
-            <td className="pt-2.5">Email</td>
-            <td className="pt-2.5">Admissão</td>
-            <td className="pt-2.5">Cargo</td>
-            <td className="pt-2.5">Status</td>
-            <td className="pt-2.5">Action</td>
+            <td className="pt-2.5 font-bold p-2">Nome</td>
+            <td className="pt-2.5 font-bold p-2">Email</td>
+            <td className="pt-2.5 font-bold p-2">Admissão</td>
+            <td className="pt-2.5 font-bold p-2">Cargo</td>
+            <td className="pt-2.5 font-bold p-2">Status</td>
+            <td className="pt-2.5 font-bold p-2">Action</td>
           </tr>
         </thead>
         <tbody>
           {collaborators.map((collaborator) => (
             <tr key={collaborator.id}>
-              <td>
+              <td className="p-2">
                 <div className="flex items-center gap-2.5">
                   <Image
                     src={"/noavatar.png"}
                     alt=""
                     width={40}
                     height={40}
-                    className="round object-cover"
+                    className="round object-cover rounded-3xl mr-2"
                   />
                   {collaborator.nome}
                 </div>
               </td>
-              <td>{collaborator.email}</td>
-              <td>{formatarData(collaborator.admissao?.toString())}</td>
+              <td className="p-2">{collaborator.email}</td>
+              <td className="p-2">{formatarData(collaborator.admissao?.toString())}</td>
               {/* <td>{collaborator.isAdmin ? "Admin" : "Client"}</td> */}
               {/* <td>{collaborator.isActive ? "active" : "passive"}</td> */}
-              <td>{/*collaborator.cargo.descricao  */} teste</td>
-              <td>
+              <td className="p-2">{collaborator.contrato.cargo.nome}</td>
+              <td className="p-2">
                 <div className="flex gap-2.5">
                   <Link href={`/collaborators/${collaborator.id}`}>
                     <button className={`${styles.button} ${styles.view}`}>
