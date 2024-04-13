@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { CompanyService } from "@/services/CompanyService";
 
-const Company = () => {
+const CompanyPage = () => {
   const [company, setCompany] = useState<Empresa>();
 
   useEffect(() => {
@@ -35,4 +35,4 @@ const Company = () => {
   );
 }
 
-export default Company;
+export default CompanyPage;

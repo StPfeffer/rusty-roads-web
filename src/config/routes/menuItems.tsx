@@ -28,7 +28,7 @@ export const menuItems = [
       },
       {
         title: "Folha de Pagamento",
-        path: "/folhapagamento",
+        path: "/folha-pagamento",
         icon: <PaymentsIcon />
       },
       {

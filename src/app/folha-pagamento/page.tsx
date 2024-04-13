@@ -1,6 +1,6 @@
 import React from "react";
 
-const Payroll = () => {
+const PayrollPage = () => {
   // const collaborators = await fetchCollaborators();
 
   return (
@@ -113,4 +113,4 @@ const Payroll = () => {
   )
 }
 
-export default Payroll;
+export default PayrollPage;
