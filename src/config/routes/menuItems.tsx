@@ -18,27 +18,27 @@ export const menuItems = [
       },
       {
         title: "Empresa",
-        path: "/company",
+        path: "/empresa",
         icon: <BusinessIcon />
       },
       {
         title: "Colaboradores",
-        path: "/collaborators",
+        path: "/colaboradores",
         icon: <GroupIcon />
       },
       {
         title: "Folha de Pagamento",
-        path: "/payroll",
+        path: "/folhapagamento",
         icon: <PaymentsIcon />
       },
       {
         title: "Benefícios",
-        path: "/benefits",
+        path: "/beneficios",
         icon: <CreditScoreIcon />
       },
       {
         title: "Descontos",
-        path: "/discounts",
+        path: "/descontos",
         icon: <DiscountIcon />
       }
     ]
@@ -48,12 +48,12 @@ export const menuItems = [
     list: [
       {
         title: "Configurações",
-        path: "/settings",
+        path: "/configuracoes",
         icon: <SettingsIcon />,
       },
       {
         title: "Ajuda",
-        path: "/help",
+        path: "/ajuda",
         icon: <InfoIcon />,
       },
     ],

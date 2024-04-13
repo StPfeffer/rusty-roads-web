@@ -10,7 +10,7 @@ const UsersPage = async () => {
   return (
     <div className={styles.container}>
       <div className="flex justify-between items-center">
-        <Link href="/collaborators/add">
+        <Link href="/collaborators/adicionar">
           <button className={styles.addButton}>Adicionar</button>
         </Link>
       </div>
@@ -21,8 +21,7 @@ const UsersPage = async () => {
             <td className="pt-2.5 font-bold p-2">Email</td>
             <td className="pt-2.5 font-bold p-2">Admissão</td>
             <td className="pt-2.5 font-bold p-2">Cargo</td>
-            <td className="pt-2.5 font-bold p-2">Status</td>
-            <td className="pt-2.5 font-bold p-2">Action</td>
+            <td className="pt-2.5 font-bold p-2">Detalhes</td>
           </tr>
         </thead>
         <tbody>
@@ -47,9 +46,9 @@ const UsersPage = async () => {
               <td className="p-2">{collaborator.contrato.cargo.nome}</td>
               <td className="p-2">
                 <div className="flex gap-2.5">
-                  <Link href={`/collaborators/${collaborator.id}`}>
+                  <Link href={`/colaboradores/${collaborator.id}`}>
                     <button className={`${styles.button} ${styles.view}`}>
-                      Detalhes
+                      Ver mais
                     </button>
                   </Link>
                 </div>
