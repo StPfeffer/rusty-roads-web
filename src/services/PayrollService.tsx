@@ -5,7 +5,7 @@ export const axiosInstance = axios.create({
     baseURL: BASE_URL
 })
 
-export class CollaboratorService {
+export class PayrollService {
 
     list() {
         return axiosInstance.get("/v1/folhaspagamento");
@@ -15,8 +15,8 @@ export class CollaboratorService {
         return axiosInstance.get("/v1/folhaspagamento/" + id);
     }
 
-    update(id: number, data: object) {
-        return axiosInstance.post("/v1/folhaspagamento/" + id, data);
+    create(data: object) {
+        return axiosInstance.post("/v1/folhaspagamento", data);
     }
 
 }
