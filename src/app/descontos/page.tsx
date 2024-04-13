@@ -1,4 +1,5 @@
 import React from "react";
+
 import Link from "next/link";
 import styles from "../../components/collaborator/collaborators.module.css";
 import { fetchDiscounts } from "@/actions/descontos/fetchDiscounts";
@@ -7,11 +8,10 @@ const DiscountsPage = async () => {
   const discounts = await fetchDiscounts();
 
   return (
-    <div className="w-full ">
-      <div className={styles.container}>
+      <div className="bg-[color:var(--bgSoft)] p-5 mt-5 rounded-lg">
       <div className="flex justify-between items-center">
         <Link href="/descontos/adicionar">
-          <button className={styles.addButton}>Criar Desconto</button>
+          <button className="p-2.5 bg-[#5D57C9] border-none pointer rounded text-[color:var(--text)]">Criar Desconto</button>
         </Link>
       </div>
       <table className="w-full">
@@ -43,43 +43,42 @@ const DiscountsPage = async () => {
         </tbody>
       </table>
     </div>
-      {/* <table className="w-full ring-1  ring-slate-600 rounded-lg">
-        <thead>
-        <tr className="">
-            <th className="py-1 overflow-hidden bg-slate-600 rounded-tl-lg w-32">Código</th>
-            <th className="py-1 overflow-hidden bg-slate-600 min-w-32">Nome</th>
-            <th className="py-1 overflow-hidden bg-slate-600 min-w-32">Descrição</th>
-            <th className="py-1 overflow-hidden bg-slate-600 w-32">Valor Padrão</th>
-            <th className="py-1 overflow-hidden bg-slate-600 w-32">Ativo</th>
-            <th className="py-1 overflow-hidden bg-slate-600 rounded-tr-lg w-24">Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="">
-              <td className="p-2">t</td>
-              <td className="p-2">t</td>
-              <td className="p-2">t</td>
-              <td className="p-2">t</td>
-              <td className="p-2">t</td>
-              <td className="p-2 flex justify-end">
-                <button className="flex items-center bg-slate-800 hover:bg-slate-700 text-white rounded p-1 px-2">🖊</button>
-              </td>
-            </tr>
-          {benefits.map(benefit => (
-            <tr className="">
-              <td className="p-2">{benefit.codigo}</td>
-              <td className="p-2">{benefit.nome}</td>
-              <td className="p-2">{benefit.descricao}</td>
-              <td className="p-2">{benefit.valorPadrão}</td>
-              <td className="p-2">{benefit.ativo.toString()}</td>
-              <td className="p-2 flex justify-end">
-                <button className="flex items-center bg-slate-800 hover:bg-slate-700 text-white rounded p-1 px-2">🖊</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
-    </div>
+      // <table className="w-full ring-1  ring-slate-600 rounded-lg">
+      //   <thead>
+      //   <tr className="">
+      //       <th className="py-1 overflow-hidden bg-slate-600 rounded-tl-lg w-32">Código</th>
+      //       <th className="py-1 overflow-hidden bg-slate-600 min-w-32">Nome</th>
+      //       <th className="py-1 overflow-hidden bg-slate-600 min-w-32">Descrição</th>
+      //       <th className="py-1 overflow-hidden bg-slate-600 w-32">Valor Padrão</th>
+      //       <th className="py-1 overflow-hidden bg-slate-600 w-32">Ativo</th>
+      //       <th className="py-1 overflow-hidden bg-slate-600 rounded-tr-lg w-24">Ações</th>
+      //     </tr>
+      //   </thead>
+      //   <tbody>
+      //     <tr className="">
+      //         <td className="p-2">t</td>
+      //         <td className="p-2">t</td>
+      //         <td className="p-2">t</td>
+      //         <td className="p-2">t</td>
+      //         <td className="p-2">t</td>
+      //         <td className="p-2 flex justify-end">
+      //           <button className="flex items-center bg-slate-800 hover:bg-slate-700 text-white rounded p-1 px-2">🖊</button>
+      //         </td>
+      //       </tr>
+      //     {benefits.map(benefit => (
+      //       <tr className="">
+      //         <td className="p-2">{benefit.codigo}</td>
+      //         <td className="p-2">{benefit.nome}</td>
+      //         <td className="p-2">{benefit.descricao}</td>
+      //         <td className="p-2">{benefit.valorPadrão}</td>
+      //         <td className="p-2">{benefit.ativo.toString()}</td>
+      //         <td className="p-2 flex justify-end">
+      //           <button className="flex items-center bg-slate-800 hover:bg-slate-700 text-white rounded p-1 px-2">🖊</button>
+      //         </td>
+      //       </tr>
+      //     ))}
+      //   </tbody>
+      // </table>
   )
 }
 

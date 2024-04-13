@@ -9,10 +9,10 @@ const BenefitsPage = async () => {
 
   return (
     <div className="w-full ">
-      <div className={styles.container}>
+      <div className="bg-[color:var(--bgSoft)] p-5 mt-5 rounded-lg">
       <div className="flex justify-between items-center">
         <Link href="/beneficios/adicionar">
-          <button className={styles.addButton}>Criar Benefício</button>
+          <button className="p-2.5 bg-[#5D57C9] border-none pointer rounded text-[color:var(--text)]">Criar Benefício</button>
         </Link>
       </div>
       <table className="w-full">

@@ -3,7 +3,6 @@ import React from "react"
 import styles from "./sidebar.module.css";
 import { menuItems } from "@/config/routes/menuItems";
 import MenuLink from "./menuLink/menuLink";
-import LogoutIcon from '@mui/icons-material/Logout';
 import Image from "next/image";
 
 const Sidebar = async () => {

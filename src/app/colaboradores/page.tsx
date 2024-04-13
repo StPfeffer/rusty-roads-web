@@ -1,5 +1,6 @@
+import React from "react";
+
 import { fetchCollaborators } from "@/actions/colaboradores/fetchCollaborators";
-import styles from "../../components/collaborator/collaborators.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import { formatarData } from "@/utils/formatarData";
@@ -8,10 +9,10 @@ const CollaboratorsPage = async () => {
   const collaborators = await fetchCollaborators();
 
   return (
-    <div className={styles.container}>
+    <div className="bg-[color:var(--bgSoft)] p-5 mt-5 rounded-lg">
       <div className="flex justify-between items-center">
         <Link href="/collaborators/adicionar">
-          <button className={styles.addButton}>Adicionar</button>
+          <button className="p-2.5 bg-[#5D57C9] border-none pointer rounded text-[color:var(--text)]">Adicionar</button>
         </Link>
       </div>
       <table className="w-full">
@@ -45,7 +46,7 @@ const CollaboratorsPage = async () => {
               <td className="p-2">
                 <div className="flex gap-2.5">
                   <Link href={`/colaboradores/${collaborator.id}`}>
-                    <button className={`${styles.button} ${styles.view}`}>
+                    <button className="rounded text-[color:var(--text)] pointer border-none py-[5px] px-[5px] bg-teal-700">
                       Ver mais
                     </button>
                   </Link>
