@@ -8,6 +8,7 @@ interface Colaborador {
   admissao: Date,
   genero: string,
   contrato: Contrato,
+  dependentes: Dependente[],
   beneficios: Beneficio[],
   descontos: Desconto[]
 }
