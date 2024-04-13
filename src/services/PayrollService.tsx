@@ -19,4 +19,8 @@ export class PayrollService {
         return axiosInstance.post("/v1/folhaspagamento", data);
     }
 
+    createFromId(collaboratorId: number) {
+        return axiosInstance.post("/v1/folhaspagamento/colaborador/" + collaboratorId);
+    }
+
 }

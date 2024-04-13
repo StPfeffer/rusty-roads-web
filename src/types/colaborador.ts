@@ -9,6 +9,6 @@ interface Colaborador {
   genero: string,
   contrato: Contrato,
   dependentes: Dependente[],
-  beneficios: Beneficio[],
-  descontos: Desconto[]
+  beneficios: ColaboradorBeneficio[],
+  descontos: ColaboradorDesconto[]
 }

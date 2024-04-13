@@ -4,10 +4,13 @@ import { PayrollService } from "@/services/PayrollService";
 
 const payrollService = new PayrollService();
 
-export const createPayroll = async (formData) => {
+export const createPayroll = async (collaboratorId: number) => {
+  console.log(collaboratorId);
+
   try {
-    await payrollService.create(formData);
+    const payroll = await payrollService.createFromId(collaboratorId);
+
+    return payroll.data as FolhaPagamento;
   } catch (error) {
-    throw new Error("Falha ao criar a folha de pagamento!");
   }
 }
