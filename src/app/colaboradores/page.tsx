@@ -3,6 +3,7 @@ import React from "react";
 import { fetchCollaborators } from "@/actions/colaboradores/fetchCollaborators";
 import Image from "next/image";
 import Link from "next/link";
+import styles from "../../components/collaborator/collaborators.module.css";
 import { formatarData } from "@/utils/formatarData";
 
 const CollaboratorsPage = async () => {
@@ -46,7 +47,7 @@ const CollaboratorsPage = async () => {
               <td className="p-2">
                 <div className="flex gap-2.5">
                   <Link href={`/colaboradores/${collaborator.id}`}>
-                    <button className="rounded text-[color:var(--text)] pointer border-none py-[5px] px-[5px] bg-teal-700">
+                    <button className={`${styles.button} ${styles.view}`}>
                       Ver mais
                     </button>
                   </Link>
