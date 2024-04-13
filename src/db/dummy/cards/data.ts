@@ -1,19 +1,19 @@
 export const cards = [
   {
     id: 1,
-    title: "Total Users",
+    title: "Colaboradores",
     number: 10.928,
     change: 12,
   },
   {
     id: 2,
-    title: "Stock",
+    title: "Folhas Emitidas",
     number: 8.236,
     change: -2,
   },
   {
     id: 3,
-    title: "Revenue",
+    title: "Total Liquidado",
     number: 6.642,
     change: 18,
   },
