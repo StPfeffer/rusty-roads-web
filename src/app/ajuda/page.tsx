@@ -1,9 +1,9 @@
 import React from "react";
 
-const Help = () => {
+const HelpPage = () => {
   return (
     <div>Help</div>
   )
 }
 
-export default Help
+export default HelpPage

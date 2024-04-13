@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { formatarData } from "@/utils/formatarData";
 
-const UsersPage = async () => {
+const CollaboratorsPage = async () => {
   const collaborators = await fetchCollaborators();
 
   return (
@@ -41,8 +41,6 @@ const UsersPage = async () => {
               </td>
               <td className="p-2">{collaborator.email}</td>
               <td className="p-2">{formatarData(collaborator.admissao?.toString())}</td>
-              {/* <td>{collaborator.isAdmin ? "Admin" : "Client"}</td> */}
-              {/* <td>{collaborator.isActive ? "active" : "passive"}</td> */}
               <td className="p-2">{collaborator.contrato.cargo.nome}</td>
               <td className="p-2">
                 <div className="flex gap-2.5">
@@ -61,4 +59,4 @@ const UsersPage = async () => {
   );
 };
 
-export default UsersPage;
+export default CollaboratorsPage;

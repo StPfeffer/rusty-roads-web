@@ -1,38 +1,18 @@
-"use client";
-import { BenefitService } from "@/services/BenefitService";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
+import React from "react";
+
 import Link from "next/link";
 import styles from "../../components/collaborator/collaborators.module.css";
+import { fetchBenefits } from "@/actions/beneficios/fetchBenefits";
 
-
-
-
-const Benefit = () => {
-  const [benefits, setBenefits] = useState<Beneficio[]>([]);
-  
-  useEffect(() => {
-    const fetchData = async () => {
-      const benefitService = new BenefitService();
-
-      try {
-        const response = await benefitService.list();
-        setBenefits(response.data);
-
-      } catch (error) {
-        console.log (error);
-      }
-    }
-
-    fetchData();
-  })
+const BenefitsPage = async () => {
+  const benefits = await fetchBenefits();
 
   return (
     <div className="w-full ">
       <div className={styles.container}>
       <div className="flex justify-between items-center">
-        <Link href="/collaborators/add">
-          <button className={styles.addButton}>Adicionar</button>
+        <Link href="/beneficios/adicionar">
+          <button className={styles.addButton}>Criar Benefício</button>
         </Link>
       </div>
       <table className="w-full">
@@ -47,14 +27,14 @@ const Benefit = () => {
         </thead>
         <tbody>
           {benefits.map((benefit) => (
-            <tr>
+            <tr key={benefit.id}>
               <td className="p-2">{benefit.nome}</td>
               <td className="p-2">{benefit.descricao}</td>
               <td className="p-2">{benefit.valorPadrao}</td>
-              <td className="p-2">{benefit.ativo ? "Ativo" : "Inativo"}</td>
+              <td className="p-2">{benefit.ativo ? "Sim" : "Não"}</td>
               <td className="p-2">
                 <div className="flex gap-2.5">
-                  <Link href={`/collaborators/${benefit.codigo}`}>
+                  <Link href={`/beneficios/${benefit.id}`}>
                     <button className={`${styles.button} ${styles.view}`}>
                       Detalhes
                     </button>
@@ -106,4 +86,4 @@ const Benefit = () => {
   )
 }
 
-export default Benefit;
+export default BenefitsPage;
