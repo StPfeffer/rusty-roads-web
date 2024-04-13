@@ -1,4 +1,8 @@
 interface FolhaPagamento {
   id: number,
-  colaborador: Colaborador
+  colaborador: Colaborador,
+  salarioBruto: number,
+  salarioLiquido: number,
+  mes: string,
+  diasUteis: number
 }
