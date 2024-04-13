@@ -21,9 +21,6 @@ const Dashboard = async () => {
         </div>
 
         <Transactions />
-
-        {/* Não está funcionando */}
-        {/* <Chart /> */}
       </div>
 
       <div className="flex-1">

@@ -4,7 +4,6 @@ import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 
 import "../styles/globals.css";
-import styles from "../components/dashboard/dashboard.module.css";
 import Navbar from "@/components/navbar/navbar";
 import Sidebar from "@/components/sidebar/sidebar";
 
@@ -19,12 +18,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className={styles.container}>
-          <div className={styles.menu}>
+        <div className="flex">
+          <div className="flex-1 bg-[color:var(--bgSoft)] p-5 min-h-screen">
             <Sidebar />
           </div>
 
-          <div className={styles.content}>
+          <div className="flex-[4] p-5">
             <Navbar />
               {children}
             {/* <Footer /> */}
