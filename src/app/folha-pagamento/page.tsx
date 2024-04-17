@@ -84,12 +84,12 @@ const PayrollPage = () => {
 
         <div className="flex-1 bg-padrao3 p-4 rounded-lg">
           <h3 className="text-xl font-semibold mb-4 ">Salário Base</h3>
-          <p className="text-4xl font-bold text-green-600">R$ {payroll?.salarioBruto}</p>
+          <p className="text-4xl font-bold text-green-600">R$ {payroll?.salarioBruto.toFixed(2)}</p>
         </div>
 
         <div className="flex-1 bg-padrao3 p-4 rounded-lg">
           <h3 className="text-xl font-semibold mb-4">Salário Líquido</h3>
-          <p className="text-4xl font-bold text-green-600">R$ {payroll?.salarioLiquido}</p>
+          <p className="text-4xl font-bold text-green-600">R$ {payroll?.salarioLiquido.toFixed(2)}</p>
         </div>
       </div>
 
@@ -104,13 +104,13 @@ const PayrollPage = () => {
                 <p className="text-sm font-thin">{colaboradorBeneficio.beneficio.descricao}</p>
               </div>
 
-              <p className="text-xl text-green-700">R$ {colaboradorBeneficio.valor}</p>
+              <p className="text-xl text-green-700">R$ {colaboradorBeneficio.valor.toFixed(2)}</p>
             </div>
           ))}
 
           <div className="flex justify-between px-4 items-center mt-10 mb-4">
             <p className="text-2xl font-medium">Total</p>
-            <p className="text-2xl font-medium text-green-600">R$ {sumValues(payroll?.colaborador.beneficios)}</p>
+            <p className="text-2xl font-medium text-green-600">R$ {sumValues(payroll?.colaborador.beneficios).toFixed(2)}</p>
           </div>
         </div>
 
@@ -120,18 +120,68 @@ const PayrollPage = () => {
 
           {payroll?.colaborador.descontos.map((colaboradorDesconto) => (
             <div key={colaboradorDesconto.id} className="flex justify-between px-4 items-center mb-4">
-            <div className="flex-col justify-center text-gray-200">
-              <p className="text-xl">{colaboradorDesconto.desconto.nome}</p>
-              <p className="text-sm font-thin">{colaboradorDesconto.desconto.descricao}</p>
-            </div>
+              <div className="flex-col justify-center text-gray-200">
+                <p className="text-xl">{colaboradorDesconto.desconto.nome}</p>
+                <p className="text-sm font-thin">{colaboradorDesconto.desconto.descricao}</p>
+              </div>
 
-            <p className="text-xl text-red-700">R$ {colaboradorDesconto.valor}</p>
-          </div>
+              <p className="text-xl text-red-700">R$ {colaboradorDesconto.valor.toFixed(2)}</p>
+            </div>
           ))}
 
           <div className="flex justify-between px-4 items-center mt-10 mb-4">
             <p className="text-2xl font-medium">Total</p>
-            <p className="text-2xl font-medium text-red-600">R$ {sumValues(payroll?.colaborador.descontos)}</p>
+            <p className="text-2xl font-medium text-red-600">R$ {sumValues(payroll?.colaborador.descontos).toFixed(2)}</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="resumo">
+        <h3 className="text-2xl font-bold mt-2 mb-6 w-96">Resumo</h3>
+
+        <div>
+          <div className="flex justify-between px-4 items-center mb-4">
+            <div className="flex-col justify-center text-gray-200">
+              <p className="text-xl">Salário Base</p>
+            </div>
+
+            <p className="text-xl text-green-700">R$ {payroll?.salarioBruto.toFixed(2)}</p>
+          </div>
+
+          <div className="flex justify-between px-4 items-center mb-4">
+            <div className="flex-col justify-center text-gray-200">
+              <p className="text-xl">Salário Base + Benefícios</p>
+              <p className="text-sm font-thin">R$ {payroll?.salarioBruto.toFixed(2)} + R$ {sumValues(payroll?.colaborador.beneficios).toFixed(2)}</p>
+            </div>
+
+            <p className="text-xl text-green-700">R$ {((payroll?.salarioBruto ? payroll?.salarioBruto : 0) + sumValues(payroll?.colaborador.beneficios)).toFixed(2)}</p>
+          </div>
+
+          <div className="flex justify-between px-4 items-center mb-4">
+            <div className="flex-col justify-center text-gray-200">
+              <p className="text-xl">Salário Base - Descontos</p>
+              <p className="text-sm font-thin">R$ {payroll?.salarioBruto.toFixed(2)} - R${sumValues(payroll?.colaborador.descontos).toFixed(2)}</p>
+            </div>
+
+            <p className="text-xl text-green-700">R$ {((payroll?.salarioBruto ? payroll?.salarioBruto : 0) - sumValues(payroll?.colaborador.descontos)).toFixed(2)}</p>
+          </div>
+
+          <div className="flex justify-between px-4 items-center mb-4">
+            <div className="flex-col justify-center text-gray-200">
+              <p className="text-xl">Benefícios - Descontos</p>
+              <p className="text-sm font-thin">R$ {sumValues(payroll?.colaborador.beneficios).toFixed(2)} - R$ {sumValues(payroll?.colaborador.descontos).toFixed(2)}</p>
+            </div>
+
+            <p className="text-xl text-green-700">R$ {(sumValues(payroll?.colaborador.beneficios) - sumValues(payroll?.colaborador.descontos)).toFixed(2)}</p>
+          </div>
+
+          <div className="flex justify-between px-4 items-center mb-4">
+            <div className="flex-col justify-center text-gray-200">
+              <p className="text-xl">Salário Líquido</p>
+              <p className="text-sm font-thin">R$ {payroll?.salarioBruto.toFixed(2)} + R$ {sumValues(payroll?.colaborador.beneficios).toFixed(2)} - R$ {sumValues(payroll?.colaborador.descontos).toFixed(2)}</p>
+            </div>
+
+            <p className="text-xl text-green-700">R$ {payroll?.salarioLiquido.toFixed(2)}</p>
           </div>
         </div>
       </div>
