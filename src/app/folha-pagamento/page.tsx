@@ -104,7 +104,7 @@ const PayrollPage = () => {
                 <p className="text-sm font-thin">{colaboradorBeneficio.beneficio.descricao}</p>
               </div>
 
-              <p className="text-xl text-green-700">R$ {colaboradorBeneficio.valor.toFixed(2)}</p>
+              <p className="text-xl text-green-700">R$ {((colaboradorBeneficio.valor <= 0 && colaboradorBeneficio.usarPadrao) ? colaboradorBeneficio.beneficio.valorPadrao : colaboradorBeneficio.valor).toFixed(2)}</p>
             </div>
           ))}
 
