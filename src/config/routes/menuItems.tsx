@@ -14,32 +14,38 @@ export const menuItems = [
       {
         title: "Dashboard",
         path: "/",
-        icon: <SpaceDashboardIcon />
+        icon: <SpaceDashboardIcon />,
+        active: true
       },
       {
         title: "Empresa",
         path: "/empresa",
-        icon: <BusinessIcon />
+        icon: <BusinessIcon />,
+        active: true
       },
       {
         title: "Colaboradores",
         path: "/colaboradores",
-        icon: <GroupIcon />
+        icon: <GroupIcon />,
+        active: true
       },
       {
         title: "Folha de Pagamento",
         path: "/folha-pagamento",
-        icon: <PaymentsIcon />
+        icon: <PaymentsIcon />,
+        active: true
       },
       {
         title: "Benefícios",
         path: "/beneficios",
-        icon: <CreditScoreIcon />
+        icon: <CreditScoreIcon />,
+        active: true
       },
       {
         title: "Descontos",
         path: "/descontos",
-        icon: <DiscountIcon />
+        icon: <DiscountIcon />,
+        active: true
       }
     ]
   },
@@ -50,12 +56,14 @@ export const menuItems = [
         title: "Configurações",
         path: "/configuracoes",
         icon: <SettingsIcon />,
+        active: false
       },
       {
         title: "Ajuda",
         path: "/ajuda",
         icon: <InfoIcon />,
-      },
+        active: false
+      }
     ],
   },
 ]

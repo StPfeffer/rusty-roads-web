@@ -4,6 +4,7 @@ import styles from "./sidebar.module.css";
 import { menuItems } from "@/config/routes/menuItems";
 import MenuLink from "./menuLink/menuLink";
 import Image from "next/image";
+import { LogoutOutlined } from "@mui/icons-material";
 
 const Sidebar = async () => {
   return (
@@ -31,12 +32,12 @@ const Sidebar = async () => {
           </li>
         ))}
       </ul>
-      {/* <form>
-        <button className={styles.logout}>
-          <LogoutIcon />
+      <form>
+        <button className={styles.logout} disabled>
+          <LogoutOutlined />
           Sair
         </button>
-      </form> */}
+      </form>
     </div>
   );
 };

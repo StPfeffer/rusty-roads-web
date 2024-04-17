@@ -3,7 +3,16 @@ import React from "react";
 import PeopleIcon from '@mui/icons-material/People';
 import styles from "./card.module.css";
 
-const Card = ({ item }) => {
+type Card = {
+  id: number,
+  title: string,
+  number: number,
+  change: number,
+}
+
+const Card = ({ item }:
+  { item: Card }
+) => {
   return (
     <div className={styles.container}>
       <PeopleIcon />
@@ -17,7 +26,7 @@ const Card = ({ item }) => {
             {item.change}%
           </span>{" "}
 
-          {item.change > 0 ? "more" : "less"} than previous week
+          {item.change > 0 ? "mais" : "menos"} que o mês anterior
         </span>
       </div>
     </div>

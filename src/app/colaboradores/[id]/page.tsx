@@ -1,7 +1,8 @@
 import { fetchCollaborator } from "@/actions/colaboradores/fetchCollaborators";
 import styles from "../../../components/collaborator/singleCollaborator/singleCollaborator.module.css";
 import Image from "next/image";
-// import { updateCollaborator } from "@/actions/updateCollaborator";
+import { formatarData } from "@/utils/formatarData";
+import Link from "next/link";
 
 const SingleUserPage = async ({ params }) => {
 
@@ -11,18 +12,6 @@ const SingleUserPage = async ({ params }) => {
   return (
     <div className={styles.container}>
       <div className="flex-col w-1/3 h-screen ">
-        {/* <div className="bg-padrao2 p-4 rounded-lg mb-4">
-          <div className="">
-            <ul>
-                <li className="bg-padrao3 p-1 flex justify-center rounded-lg mb-1 hover:bg-padrao4">
-                  <button type="button">Informações</button>
-                </li>
-                <li className="bg-padrao3 p-1 flex justify-center rounded-lg mb-1 hover:bg-padrao4"><a href="#beneficios">Benefícios</a></li>
-                <li className="bg-padrao3 p-1 flex justify-center rounded-lg mb-1 hover:bg-padrao4"><a href="#descontos">Descontos</a></li>
-            </ul>
-          </div>
-        </div> */}
-
         <div className={styles.infoContainer} >
           <div className={styles.imgContainer}>
             <Image src={"/noavatar.png"} alt="" fill />
@@ -40,7 +29,7 @@ const SingleUserPage = async ({ params }) => {
             <label>Email</label>
             <input type="email" name="email" placeholder={collaborator.email} />
             <label>Admissão</label>
-            <input type="text" name="admissao" placeholder={collaborator.admissao?.toString()} />
+            <input type="text" name="admissao" placeholder={formatarData(collaborator.admissao?.toString())} />
             <label>Gênero</label>
             <input type="text" name="genero" placeholder={collaborator.genero} />
             <div className="flex justify-between">
@@ -53,57 +42,151 @@ const SingleUserPage = async ({ params }) => {
                 <input className="w-full" type="text" name="cnh" placeholder={collaborator.cnh} />
               </div>
             </div>
-            {/* <label>Is Admin?</label> */}
-            {/* <select name="isAdmin" id="isAdmin">
-              <option value={true} selected={collaborator.isAdmin}>Yes</option>
-              <option value={false} selected={!collaborator.isAdmin}>No</option>
-            </select>
-            <label>Is Active?</label>
-            <select name="isActive" id="isActive">
-              <option value={true} selected={collaborator.isActive}>Yes</option>
-              <option value={false} selected={!collaborator.isActive}>No</option>
-            </select> */}
-            <button>Atualizar</button>
+            <button disabled>Atualizar</button>
           </form>
-        </div> 
+          </div>
 
         <p className="h-8"> </p>
 
-        <div id="#contrato" className={styles.formContainer}>
-          <h3 className="text-2xl">Contrato</h3>
-          <form className={styles.form}>
-            <div className="mt-4 flex justify-between">
-              <div className="flex-col w-96">
-                <label >Tipo de contrato</label>
-                <input className="w-full" type="text" name="tipo" placeholder={collaborator.contrato.tipo} />
-              </div>
-              <div className="flex-col w-96 ">
-                <label>Filiação</label>
-                <input className="w-full" type="text" name="filiacao" placeholder={collaborator.contrato.tipoFiliacao} />
-              </div>
-              <div className="flex-col w-2/12">
-                <label >Carga Horária Semanal</label>
-                <input className="w-full" type="text" name="cargaHoraria" placeholder={collaborator.contrato.cargaHoraria} />
-              </div>
-            </div>
-            <div className=" flex justify-between">
-              <div className="flex-col w-96">
-                <label className="">Cargo</label>
-                <input  className="w-full" type="text" name="cargo" placeholder={collaborator.contrato.cargo.nome} />
-              </div>
-              <div className="flex-col w-2/12">
-                <label className="">Nível</label>
-                <input  className="w-full" type="text" name="cargo" placeholder={collaborator.contrato.cargo.nivel} />
-              </div>
-              <div className="flex-col  w-96">
-                <label className="">Salário base</label>
-                <input  className="w-full" type="text" name="cargo" placeholder={collaborator.contrato.cargo.salarioBase} />
-              </div>
-            </div>
-          </form>
+        <div id="#beneficios" className={styles.formContainer}>
+          <h3 className="text-2xl">Benefícios</h3>
+          <table className="w-full">
+            <thead>
+              <tr>
+                <td className="pt-2.5 font-bold p-2">Nome</td>
+                <td className="pt-2.5 font-bold p-2">Descrição</td>
+                <td className="pt-2.5 font-bold p-2">Valor</td>
+                <td className="pt-2.5 font-bold p-2">Ativo</td>
+                <td className="pt-2.5 font-bold p-2">Detalhes</td>
+              </tr>
+            </thead>
+            <tbody>
+              {collaborator.beneficios.map((beneficio) => (
+                <tr key={collaborator.id}>
+                  <td className="p-2">
+                    <div className="flex items-center gap-2.5">
+                      <Image
+                        src={"/noavatar.png"}
+                        alt=""
+                        width={40}
+                        height={40}
+                        className="round object-cover rounded-3xl mr-2"
+                      />
+                      {beneficio.beneficio.nome}
+                    </div>
+                  </td>
+                  <td className="p-2">{beneficio.beneficio.descricao}</td>
+                  <td className="p-2">{beneficio.valor == 0 ? beneficio.beneficio.valorPadrao : beneficio.valor}</td>
+                  <td className="p-2">{beneficio.ativo ? "Sim" : "Não"}</td>
+                  <td className="p-2">
+                    <div className="flex gap-2.5">
+                      <Link href={`/colaboradores/${collaborator.id}/beneficios/${beneficio.id}`}>
+                        <button className={`${styles.button} ${styles.view}`}>
+                          Ver mais
+                        </button>
+                      </Link>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>  
+
+        <p className="h-8" />
+
+        <div id="#descontos" className={styles.formContainer}>
+          <h3 className="text-2xl">Descontos</h3>
+          <table className="w-full">
+            <thead>
+              <tr>
+                <td className="pt-2.5 font-bold p-2">Nome</td>
+                <td className="pt-2.5 font-bold p-2">Descrição</td>
+                <td className="pt-2.5 font-bold p-2">Valor</td>
+                <td className="pt-2.5 font-bold p-2">Ativo</td>
+                <td className="pt-2.5 font-bold p-2">Detalhes</td>
+              </tr>
+            </thead>
+            <tbody>
+              {collaborator.descontos.map((desconto) => (
+                <tr key={collaborator.id}>
+                  <td className="p-2">
+                    <div className="flex items-center gap-2.5">
+                      <Image
+                        src={"/noavatar.png"}
+                        alt=""
+                        width={40}
+                        height={40}
+                        className="round object-cover rounded-3xl mr-2"
+                      />
+                      {desconto.desconto.nome}
+                    </div>
+                  </td>
+                  <td className="p-2">{desconto.desconto.descricao}</td>
+                  <td className="p-2">{desconto.valor}</td>
+                  <td className="p-2">{desconto.ativo ? "Sim" : "Não"}</td>
+                  <td className="p-2">
+                    <div className="flex gap-2.5">
+                      <Link href={`/colaboradores/${collaborator.id}/descontos/${desconto.id}`}>
+                        <button className={`${styles.button} ${styles.view}`}>
+                          Ver mais
+                        </button>
+                      </Link>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
 
-        <p className="h-8"> </p>
+        <p className="h-8" />
+
+        <div id="contrato" className={styles.formContainer}>
+          <h3 className="text-2xl">Contrato</h3>
+          <table className="w-full">
+            <thead>
+              <tr>
+                <td className="pt-2.5 font-bold p-2">Tipo</td>
+                <td className="pt-2.5 font-bold p-2">Filiação</td>
+                <td className="pt-2.5 font-bold p-2">Carga Horária</td>
+                <td className="pt-2.5 font-bold p-2">Cargo</td>
+                <td className="pt-2.5 font-bold p-2">Detalhes</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr key={collaborator.contrato.id}>
+                <td className="p-2">
+                  <div className="flex items-center gap-2.5">
+                    <Image
+                      src={"/noavatar.png"}
+                      alt=""
+                      width={40}
+                      height={40}
+                      className="round object-cover rounded-3xl mr-2"
+                    />
+                    {collaborator.contrato.tipo}
+                  </div>
+                </td>
+                <td className="p-2">{collaborator.contrato.tipoFiliacao}</td>
+                <td className="p-2">{collaborator.contrato.cargaHoraria}</td>
+                <td className="p-2">{collaborator.contrato.cargo.nome}</td>
+                <td className="p-2">
+                  <div className="flex gap-2.5">
+                    <Link href={`/colaboradores/${collaborator.id}/contrato`}>
+                      <button className={`${styles.button} ${styles.view}`}>
+                        Ver mais
+                      </button>
+                    </Link>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+
+        <p className="h-8" />
 
         <div id="#dependentes" className={styles.formContainer}>
           <h3 className="text-2xl">Dependentes</h3>
@@ -129,63 +212,8 @@ const SingleUserPage = async ({ params }) => {
             </tbody>
           </table>  
         </div>  
-
-        <p className="h-8"> </p>
-
-        <div id="#beneficios" className={styles.formContainer}>
-          <h3 className="text-2xl">Benefícios</h3>
-
-          <table className="w-full ring-2  ring-[#2e374a] rounded-lg mt-8">
-            <thead>
-              <tr className="text-gray-500 ">
-                <th className="py-1 pb-2 overflow-hidden bg-[#151c2c] rounded-tl-lg w-64">Nome</th>
-                <th className="py-1 overflow-hidden bg-[#151c2c] w-32">Nascimento</th>
-                <th className="py-1 overflow-hidden bg-[#151c2c] w-32">Parentesco</th>
-                <th className="py-1 overflow-hidden bg-[#151c2c] rounded-tr-lg w-24">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="">
-                  <td className="p-2">t</td>
-                  <td className="p-2">t</td>
-                  <td className="p-2">t</td>
-                  <td className="p-2 flex justify-end">
-                    <button className="flex items-center bg-slate-800 hover:bg-slate-700 text-white rounded p-1 px-2">🖊</button>
-                  </td>
-                </tr>
-            </tbody>
-          </table>  
-        </div>  
-
-        <p className="h-8"> </p>
-
-        <div id="#descontos" className={styles.formContainer}>
-          <h3 className="text-2xl">Descontos</h3>
-
-          <table className="w-full ring-2  ring-[#2e374a] rounded-lg mt-8">
-            <thead>
-              <tr className="text-gray-500 ">
-                <th className="py-1 pb-2 overflow-hidden bg-[#151c2c] rounded-tl-lg w-64">Nome</th>
-                <th className="py-1 overflow-hidden bg-[#151c2c] w-32">Nascimento</th>
-                <th className="py-1 overflow-hidden bg-[#151c2c] w-32">Parentesco</th>
-                <th className="py-1 overflow-hidden bg-[#151c2c] rounded-tr-lg w-24">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="">
-                  <td className="p-2">t</td>
-                  <td className="p-2">t</td>
-                  <td className="p-2">t</td>
-                  <td className="p-2 flex justify-end">
-                    <button className="flex items-center bg-slate-800 hover:bg-slate-700 text-white rounded p-1 px-2">🖊</button>
-                  </td>
-                </tr>
-            </tbody>
-          </table>  
-        </div>  
       </div>
     </div>
-    
   );
 };
 
