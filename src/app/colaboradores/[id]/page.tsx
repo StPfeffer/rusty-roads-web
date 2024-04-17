@@ -191,26 +191,45 @@ const SingleUserPage = async ({ params }) => {
         <div id="#dependentes" className={styles.formContainer}>
           <h3 className="text-2xl">Dependentes</h3>
 
-          <table className="w-full ring-2  ring-[#2e374a] rounded-lg mt-8">
+          <table className="w-full">
             <thead>
-              <tr className="text-gray-500 ">
-                <th className="py-1 pb-2 overflow-hidden bg-[#151c2c] rounded-tl-lg w-64">Nome</th>
-                <th className="py-1 overflow-hidden bg-[#151c2c] w-32">Nascimento</th>
-                <th className="py-1 overflow-hidden bg-[#151c2c] w-32">Parentesco</th>
-                <th className="py-1 overflow-hidden bg-[#151c2c] rounded-tr-lg w-24">Ações</th>
+              <tr>
+                <td className="pt-2.5 font-bold p-2">Nome</td>
+                <td className="pt-2.5 font-bold p-2">Nascimento</td>
+                <td className="pt-2.5 font-bold p-2">Parentensco</td>
+                <td className="pt-2.5 font-bold p-2">Detalhes</td>
               </tr>
             </thead>
             <tbody>
-              <tr className="">
-                  <td className="p-2">t</td>
-                  <td className="p-2">t</td>
-                  <td className="p-2">t</td>
-                  <td className="p-2 flex justify-end">
-                    <button className="flex items-center bg-slate-800 hover:bg-slate-700 text-white rounded p-1 px-2">🖊</button>
-                  </td>
-                </tr>
+              {collaborator.dependentes.map((dependente) => (
+              <tr key={collaborator.id}>
+                <td className="p-2">
+                  <div className="flex items-center gap-2.5">
+                    <Image
+                      src={"/noavatar.png"}
+                      alt=""
+                      width={40}
+                      height={40}
+                      className="round object-cover rounded-3xl mr-2"
+                    />
+                    {dependente.nome}
+                  </div>
+                </td>
+                <td className="p-2">{dependente.nascimento}</td>
+                <td className="p-2">{dependente.parentesco}</td>
+                <td className="p-2">
+                  <div className="flex gap-2.5">
+                    <Link href={`/colaboradores/${collaborator.id}/contrato`}>
+                      <button className={`${styles.button} ${styles.view}`} disabled>
+                        Ver mais
+                      </button>
+                    </Link>
+                  </div>
+                </td>
+              </tr>
+              ))}
             </tbody>
-          </table>  
+          </table>
         </div>  
       </div>
     </div>
