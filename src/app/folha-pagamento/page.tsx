@@ -114,7 +114,6 @@ const PayrollPage = () => {
           </div>
         </div>
 
-
         <div id="descontos" className="flex-1 bg-padrao2 p-4 rounded-lg">
           <h3 className="text-2xl font-bold mt-2 mb-6 w-96">Descontos</h3>
 

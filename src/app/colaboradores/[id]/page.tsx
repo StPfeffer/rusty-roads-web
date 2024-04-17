@@ -3,6 +3,9 @@ import styles from "../../../components/collaborator/singleCollaborator/singleCo
 import Image from "next/image";
 import { formatarData } from "@/utils/formatarData";
 import Link from "next/link";
+import { formatarPrazo } from "@/utils/formatarPrazo";
+import { calcularINSS } from "@/utils/calcularINSS";
+import { calcularIRRF } from "@/utils/calcularIRRF";
 
 const SingleUserPage = async ({ params }) => {
 
@@ -18,6 +21,14 @@ const SingleUserPage = async ({ params }) => {
           </div>
           {collaborator.nome}
         </div>
+
+        <Link href={`/colaboradores/${collaborator.id}/ponto`}>
+          <button className={styles.teste}>
+            Ver ponto
+          </button>
+        </Link>
+
+        R$ {collaborator.contrato.cargo.salarioBase}
       </div>
 
       <div className="w-full">
@@ -36,7 +47,52 @@ const SingleUserPage = async ({ params }) => {
           </form>
         </div>
 
-        <p className="h-8"> </p>
+        <p className="h-8" />
+
+        <div id="#dependentes" className={styles.formContainer}>
+          <h3 className="text-2xl">Dependentes</h3>
+          <table className="w-full">
+            <thead>
+              <tr>
+                <td className="pt-2.5 font-bold p-2">Nome</td>
+                <td className="pt-2.5 font-bold p-2">Parentesco</td>
+                <td className="pt-2.5 font-bold p-2">Nascimento</td>
+                <td className="pt-2.5 font-bold p-2">Detalhes</td>
+              </tr>
+            </thead>
+            <tbody>
+              {collaborator.dependentes.map((dependente) => (
+                <tr key={collaborator.id}>
+                  <td className="p-2">
+                    <div className="flex items-center gap-2.5">
+                      <Image
+                        src={"/noavatar.png"}
+                        alt=""
+                        width={40}
+                        height={40}
+                        className="round object-cover rounded-3xl mr-2"
+                      />
+                      {dependente.nome}
+                    </div>
+                  </td>
+                  <td className="p-2">{dependente.parentesco}</td>
+                  <td className="p-2">{formatarData(dependente.nascimento?.toString())}</td>
+                  <td className="p-2">
+                    <div className="flex gap-2.5">
+                      <Link href={`/colaboradores/${collaborator.id}/dependentes/${dependente.id}`}>
+                        <button className={`${styles.button} ${styles.view}`}>
+                          Ver mais
+                        </button>
+                      </Link>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <p className="h-8" />
 
         <div id="#beneficios" className={styles.formContainer}>
           <h3 className="text-2xl">Benefícios</h3>
@@ -66,7 +122,7 @@ const SingleUserPage = async ({ params }) => {
                     </div>
                   </td>
                   <td className="p-2">{beneficio.beneficio.descricao}</td>
-                  <td className="p-2">{beneficio.valor == 0 ? beneficio.beneficio.valorPadrao : beneficio.valor}</td>
+                  <td className="p-2">{beneficio.beneficio.tipoValor === 'MOEDA' ? 'R$ ' + (beneficio.valor == 0 ? beneficio.beneficio.valorPadrao : beneficio.valor) : (beneficio.valor == 0 ? beneficio.beneficio.valorPadrao : beneficio.valor) + '%'} / {formatarPrazo(beneficio.beneficio.prazo)}</td>
                   <td className="p-2">{beneficio.ativo ? "Sim" : "Não"}</td>
                   <td className="p-2">
                     <div className="flex gap-2.5">
@@ -113,7 +169,9 @@ const SingleUserPage = async ({ params }) => {
                     </div>
                   </td>
                   <td className="p-2">{desconto.desconto.descricao}</td>
-                  <td className="p-2">{desconto.valor}</td>
+
+                  {/* Gambiarra */}
+                  <td className="p-2">{(desconto.desconto.tipoDesconto === 'INSS') ? 'R$ ' + calcularINSS(collaborator.contrato.cargo.salarioBase) : (desconto.desconto.tipoDesconto === 'IRRF') ? 'R$ ' + calcularIRRF(collaborator.contrato.cargo.salarioBase) : desconto.desconto.tipoValor === 'MOEDA' ? 'R$ ' + desconto.valor : desconto.valor + '%'} / {formatarPrazo(desconto.desconto.prazo)}</td>
                   <td className="p-2">{desconto.ativo ? "Sim" : "Não"}</td>
                   <td className="p-2">
                     <div className="flex gap-2.5">
@@ -159,7 +217,7 @@ const SingleUserPage = async ({ params }) => {
                   </div>
                 </td>
                 <td className="p-2">{collaborator.contrato.tipoFiliacao}</td>
-                <td className="p-2">{collaborator.contrato.cargaHoraria}</td>
+                <td className="p-2">{collaborator.contrato.cargaHoraria}h Semanais</td>
                 <td className="p-2">{collaborator.contrato.cargo.nome}</td>
                 <td className="p-2">
                   <div className="flex gap-2.5">
