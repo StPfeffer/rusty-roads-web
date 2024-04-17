@@ -13,7 +13,7 @@ const CollaboratorsPage = async () => {
     <div className="bg-[color:var(--bgSoft)] p-5 mt-5 rounded-lg">
       <div className="flex justify-between items-center">
         <Link href="/collaborators/adicionar">
-          <button className="p-2.5 bg-[#5D57C9] border-none pointer rounded text-[color:var(--text)]">Adicionar</button>
+          <button className="p-2.5 bg-[#5D57C9] border-none pointer rounded text-[color:var(--text)]" disabled>Adicionar</button>
         </Link>
       </div>
       <table className="w-full">

@@ -7,8 +7,12 @@ export const axiosInstance = axios.create({
 
 export class DepartmentService {
 
-    get() {
+    list() {
         return axiosInstance.get("/v1/departamentos")
+    }
+
+    listRoles(id: number) {
+        return axiosInstance.get("v1/departamentos/" + id);
     }
 
 }
