@@ -8,6 +8,8 @@ export const axiosInstance = axios.create({
 export class DependentService {
 
   findByCollaboratorIdAndId(collaboratorId: number, dependentId: number) {
+    console.log("/v1/colaboradores/" + collaboratorId + "/dependentes/" + dependentId);
+
     return axiosInstance.get("/v1/colaboradores/" + collaboratorId + "/dependentes/" + dependentId);
   }
 

@@ -9,7 +9,7 @@ const CollaboradorDependentPage = async ({ params }) => {
     <div>
       <div>{dependent.id}</div>
       <div>{dependent.nome}</div>
-      <div>{dependent.nascimento.toUTCString()}</div>
+      <div>{dependent.nascimento.toString()}</div>
       <div>{dependent.parentesco}</div>
     </div>
   )

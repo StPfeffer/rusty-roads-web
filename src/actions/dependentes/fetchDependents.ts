@@ -3,9 +3,9 @@ import { DependentService } from "@/services/DependentService";
 
 const dependentService = new DependentService();
 
-export const fetchDependents = async (): Promise<Dependente[]> => {
+export const fetchDependents = async (collaboratorId: number): Promise<Dependente[]> => {
   try {
-    const dependents = await dependentService.list();
+    const dependents = await dependentService.listByCollaboratorId(collaboratorId);
 
     return dependents.data as Dependente[];
   } catch (error) {
@@ -16,11 +16,11 @@ export const fetchDependents = async (): Promise<Dependente[]> => {
 
 };
 
-export const fetchDependent = async (id: number): Promise<Dependente> => {
+export const fetchDependent = async (id: number, collaboratorId: number): Promise<Dependente> => {
   console.log(id);
 
   try {
-    const dependent = await dependentService.findById(id);
+    const dependent = await dependentService.findByCollaboratorIdAndId(collaboratorId, id);
 
     return dependent.data as Dependente;
   } catch (err) {

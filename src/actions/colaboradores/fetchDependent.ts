@@ -5,6 +5,8 @@ import { DependentService } from "@/services/DependentService";
 const dependentService = new DependentService();
 
 export const fetchDependent = async (collaboratorId: number, dependentId: number): Promise<Dependente> => {
+  console.log(collaboratorId);
+  console.log(dependentId);
   try {
     const dependent = await dependentService.findByCollaboratorIdAndId(collaboratorId, dependentId);
 

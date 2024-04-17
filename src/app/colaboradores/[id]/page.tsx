@@ -55,51 +55,6 @@ const SingleUserPage = async ({ params }) => {
             </div>
             <button disabled>Atualizar</button>
           </form>
-          </div>
-
-        <p className="h-8" />
-
-        <div id="#dependentes" className={styles.formContainer}>
-          <h3 className="text-2xl">Dependentes</h3>
-          <table className="w-full">
-            <thead>
-              <tr>
-                <td className="pt-2.5 font-bold p-2">Nome</td>
-                <td className="pt-2.5 font-bold p-2">Parentesco</td>
-                <td className="pt-2.5 font-bold p-2">Nascimento</td>
-                <td className="pt-2.5 font-bold p-2">Detalhes</td>
-              </tr>
-            </thead>
-            <tbody>
-              {collaborator.dependentes.map((dependente) => (
-                <tr key={collaborator.id}>
-                  <td className="p-2">
-                    <div className="flex items-center gap-2.5">
-                      <Image
-                        src={"/noavatar.png"}
-                        alt=""
-                        width={40}
-                        height={40}
-                        className="round object-cover rounded-3xl mr-2"
-                      />
-                      {dependente.nome}
-                    </div>
-                  </td>
-                  <td className="p-2">{dependente.parentesco}</td>
-                  <td className="p-2">{formatarData(dependente.nascimento?.toString())}</td>
-                  <td className="p-2">
-                    <div className="flex gap-2.5">
-                      <Link href={`/colaboradores/${collaborator.id}/dependentes/${dependente.id}`}>
-                        <button className={`${styles.button} ${styles.view}`}>
-                          Ver mais
-                        </button>
-                      </Link>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </div>
 
         <p className="h-8" />
@@ -147,7 +102,7 @@ const SingleUserPage = async ({ params }) => {
               ))}
             </tbody>
           </table>
-        </div>  
+        </div>
 
         <p className="h-8" />
 
@@ -242,7 +197,7 @@ const SingleUserPage = async ({ params }) => {
             </tbody>
           </table>
         </div>
-        
+
 
         <p className="h-8" />
 
@@ -260,35 +215,35 @@ const SingleUserPage = async ({ params }) => {
             </thead>
             <tbody>
               {collaborator.dependentes.map((dependente) => (
-              <tr key={collaborator.id}>
-                <td className="p-2">
-                  <div className="flex items-center gap-2.5">
-                    <Image
-                      src={"/noavatar.png"}
-                      alt=""
-                      width={40}
-                      height={40}
-                      className="round object-cover rounded-3xl mr-2"
-                    />
-                    {dependente.nome}
-                  </div>
-                </td>
-                <td className="p-2">{dependente.nascimento}</td>
-                <td className="p-2">{dependente.parentesco}</td>
-                <td className="p-2">
-                  <div className="flex gap-2.5">
-                    <Link href={`/colaboradores/${collaborator.id}/contrato`}>
-                      <button className={`${styles.button} ${styles.view}`} disabled>
-                        Ver mais
-                      </button>
-                    </Link>
-                  </div>
-                </td>
-              </tr>
+                <tr key={collaborator.id}>
+                  <td className="p-2">
+                    <div className="flex items-center gap-2.5">
+                      <Image
+                        src={"/noavatar.png"}
+                        alt=""
+                        width={40}
+                        height={40}
+                        className="round object-cover rounded-3xl mr-2"
+                      />
+                      {dependente.nome}
+                    </div>
+                  </td>
+                  <td className="p-2">{formatarData(dependente.nascimento?.toString())}</td>
+                  <td className="p-2">{dependente.parentesco}</td>
+                  <td className="p-2">
+                    <div className="flex gap-2.5">
+                      <Link href={`/colaboradores/${collaborator.id}/dependentes/${dependente.id}`}>
+                        <button className={`${styles.button} ${styles.view}`}>
+                          Ver mais
+                        </button>
+                      </Link>
+                    </div>
+                  </td>
+                </tr>
               ))}
             </tbody>
           </table>
-        </div>  
+        </div>
       </div>
     </div>
   );
