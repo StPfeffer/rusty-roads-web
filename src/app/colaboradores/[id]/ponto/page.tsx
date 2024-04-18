@@ -22,7 +22,7 @@ const ColaboradorPontoPage = async ({ params }) => {
         </thead>
         <tbody>
           {collaboratorPoint.map((point) => (
-            <tr key={point.colaborador.id == id ? "sim" : "Não"}>
+            <tr key={point.colaborador.id == id ?}>
               <td className="p-2">{point.mes}</td>
               <td className="p-2">{point.diasTrabalhados}</td>
               <td className="p-2">{point.faltas}</td>
