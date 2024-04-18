@@ -16,14 +16,14 @@ export const fetchDepartments = async (): Promise<Departamento[]> => {
   }
 };
 
-export const fetchRoles = async (id: number): Promise<Cargo[]> => {
-  try {
-    const roles = await departmentService.listRoles(id);
+// export const fetchRoles = async (id: number): Promise<Cargo[]> => {
+//   try {
+//     const roles = await departmentService.listRoles(id);
 
-    return roles.data as Cargo[];
-  } catch (err) {
-    console.log(err);
+//     return roles.data as Cargo[];
+//   } catch (err) {
+//     console.log(err);
 
-    throw new Error("Não foi possível listar os cargos!");
-  }
-}
+//     throw new Error("Não foi possível listar os cargos!");
+//   }
+// }
