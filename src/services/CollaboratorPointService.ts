@@ -11,7 +11,8 @@ export class CollaboratorPointService {
     return axiosInstance.get("/v1/colaboradores/" + id + "/ponto");
   }
 
-  list() {
-    return axiosInstance.get("/v1/ponto");
+  listByCollaboratorId(id: number) {
+    return axiosInstance.get("/v1/colaboradores/" + id + "/pontos");
   }
+
 }

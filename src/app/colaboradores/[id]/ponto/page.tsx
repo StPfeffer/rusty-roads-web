@@ -4,7 +4,7 @@ import styles from "../../../../components/collaborator/singleCollaborator/singl
 const ColaboradorPontoPage = async ({ params }) => {
 
   const { id } = params;
-  const collaboratorPoint = await fetchCollaboratorPoints();
+  const collaboratorPoint = await fetchCollaboratorPoints(id);
 
   return (
     <div className="bg-padrao2 p-4 mt-4 rounded-lg">
@@ -22,7 +22,7 @@ const ColaboradorPontoPage = async ({ params }) => {
         </thead>
         <tbody>
           {collaboratorPoint.map((point) => (
-            <tr key={point.colaborador.id == id ?}>
+            <tr key={point.id}>
               <td className="p-2">{point.mes}</td>
               <td className="p-2">{point.diasTrabalhados}</td>
               <td className="p-2">{point.faltas}</td>
@@ -32,9 +32,9 @@ const ColaboradorPontoPage = async ({ params }) => {
               <td className="p-2">
                 <div className="flex gap-2.5">
                   {/* <Link href={`/colaboradores/${collaborator.id}`}> */}
-                    <button className={`${styles.button} ${styles.view}`}>
-                      Ver mais
-                    </button>
+                  <button className={`${styles.button} ${styles.view}`}>
+                    Ver mais
+                  </button>
                   {/* </Link> */}
                 </div>
               </td>
@@ -42,13 +42,6 @@ const ColaboradorPontoPage = async ({ params }) => {
           ))}
         </tbody>
       </table>
-      {/* <div>{collaboratorPoint.id}</div>
-      <div>{collaboratorPoint.diasTrabalhados}</div>
-      <div>{collaboratorPoint.faltas}</div>
-      <div>{collaboratorPoint.horasAtraso}</div>
-      <div>{collaboratorPoint.horas50}</div>
-      <div>{collaboratorPoint.horas100}</div>
-      <div>{collaboratorPoint.mes}</div> */}
     </div>
   )
 }

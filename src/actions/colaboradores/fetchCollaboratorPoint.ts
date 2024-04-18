@@ -4,9 +4,9 @@ import { CollaboratorPointService } from "@/services/CollaboratorPointService";
 
 const collaboratorPointService = new CollaboratorPointService();
 
-export const fetchCollaboratorPoints = async (): Promise<ColaboradorPonto[]> => {
+export const fetchCollaboratorPoints = async (id: number): Promise<ColaboradorPonto[]> => {
   try {
-    const collaboratorsPoints = await collaboratorPointService.list();
+    const collaboratorsPoints = await collaboratorPointService.listByCollaboratorId(id);
 
     return collaboratorsPoints.data as ColaboradorPonto[];
   } catch (error) {
