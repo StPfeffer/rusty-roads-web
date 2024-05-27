@@ -52,6 +52,12 @@ npm install
 
 This will install all the required dependencies to run the application.
 
+## Environment Variables
+
+You'll need the Rusty Roads backend URL.
+
+Once you have it, you can copy or rename the `.env.example` file to `.env` and put it on `BASE_URL`.
+
 ## Running
 
 Once everything is set up, you can run the following command to start the application:
