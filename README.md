@@ -4,11 +4,6 @@
 
 <h1 align="center">Rusty Roads Web</h1>
 
-[![Build](https://github.com/StPfeffer/rusty-roads/actions/workflows/build.yml/badge.svg)](https://github.com/StPfeffer/rusty-roads/actions/workflows/build.yml)
-[![Rust Analyze](https://github.com/StPfeffer/rusty-roads/actions/workflows/rust-clippy.yml/badge.svg)](https://github.com/StPfeffer/rusty-roads/actions/workflows/rust-clippy.yml)
-[![Rust Check](https://github.com/StPfeffer/rusty-roads/actions/workflows/rust.yml/badge.svg)](https://github.com/StPfeffer/rusty-roads/actions/workflows/rust.yml)
-[![Release](https://img.shields.io/github/v/release/StPfeffer/rusty-roads?color=%23c694ff)](https://github.com/StPfeffer/rusty-roads/releases/latest)
-
 </div>
 
 ## About
