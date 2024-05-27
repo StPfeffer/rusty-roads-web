@@ -8,7 +8,7 @@
 
 ## About
 
-This project is part of our college coursework, aiming to develop a simple route manager application. We chose the Rust programming language to add an extra layer of challenge and learning opportunity.
+This project is part of our college coursework, aiming to develop a simple route manager application.
 
 ## Features
 
