@@ -1,11 +1,9 @@
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import BusinessIcon from '@mui/icons-material/Business';
 import GroupIcon from '@mui/icons-material/Group';
-import PaymentsIcon from '@mui/icons-material/Payments';
-import DiscountIcon from '@mui/icons-material/Discount';
-import CreditScoreIcon from '@mui/icons-material/CreditScore';
 import SettingsIcon from '@mui/icons-material/Settings';
 import InfoIcon from '@mui/icons-material/Info';
+import { CarRental, Route } from '@mui/icons-material';
 
 export const menuItems = [
   {
@@ -18,33 +16,21 @@ export const menuItems = [
         active: true
       },
       {
-        title: "Empresa",
-        path: "/empresa",
-        icon: <BusinessIcon />,
-        active: true
-      },
-      {
         title: "Colaboradores",
         path: "/colaboradores",
         icon: <GroupIcon />,
         active: true
       },
       {
-        title: "Folha de Pagamento",
-        path: "/folha-pagamento",
-        icon: <PaymentsIcon />,
+        title: "Veículos",
+        path: "/veiculos",
+        icon: <CarRental/>,
         active: true
       },
       {
-        title: "Benefícios",
-        path: "/beneficios",
-        icon: <CreditScoreIcon />,
-        active: true
-      },
-      {
-        title: "Descontos",
-        path: "/descontos",
-        icon: <DiscountIcon />,
+        title: "Rotas",
+        path: "/rotas",
+        icon: <Route />,
         active: true
       }
     ]
