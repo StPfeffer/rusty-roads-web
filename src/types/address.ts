@@ -1,12 +1,11 @@
-interface Endereco {
-    id: number,
-    endereco: string,
-    numero: string,
-    vizinhanca: string,
-    referencia: string,
-    complemento: string,
-    codigo_postal: string,
-    latitude: string,
-    longitude: string,
-    cidade: string,
-  }
+interface Address {
+  address: string
+  number: string
+  neighbourhood: string
+  reference: string,
+  complement: string,
+  zip_code: string
+  latitude: number,
+  longitude: number,
+  city: City
+}

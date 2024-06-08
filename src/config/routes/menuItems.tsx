@@ -17,19 +17,19 @@ export const menuItems = [
       },
       {
         title: "Colaboradores",
-        path: "/colaboradores",
+        path: "/collaborators",
         icon: <GroupIcon />,
         active: true
       },
       {
         title: "Veículos",
-        path: "/veiculos",
+        path: "/vehicles",
         icon: <CarRental/>,
         active: true
       },
       {
         title: "Rotas",
-        path: "/rotas",
+        path: "/routes",
         icon: <Route />,
         active: true
       }
@@ -40,13 +40,13 @@ export const menuItems = [
     list: [
       {
         title: "Configurações",
-        path: "/configuracoes",
+        path: "/settings",
         icon: <SettingsIcon />,
         active: false
       },
       {
         title: "Ajuda",
-        path: "/ajuda",
+        path: "/help",
         icon: <InfoIcon />,
         active: false
       }
