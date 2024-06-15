@@ -16,3 +16,15 @@ export class VehicleService {
   }
 
 }
+
+export class VehicleDocumentService {
+
+  list() {
+    return axiosInstance.get("/v1/documents");
+  }
+
+  findByVehicleId(vehicleId: string) {
+    return axiosInstance.get("/v1/vehicles/"+ vehicleId + "/documents");
+  }
+
+}

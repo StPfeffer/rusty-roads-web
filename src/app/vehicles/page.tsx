@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import styles from "../../components/collaborator/collaborators.module.css";
 import { fetchVehicles } from "@/actions/vehicle/fetchVehicles";
+import { fetchVehicleDoc, fetchVehiclesDocs } from "@/actions/vehicle/fetchVehiclesDocuments";
 
 const VehiclesPage = async () => {
   const vehicles = await fetchVehicles();
@@ -17,11 +18,10 @@ const VehiclesPage = async () => {
       <table className="w-full">
         <thead>
           <tr>
-            <td className="pt-2.5 font-bold p-2">Nome</td>
-            <td className="pt-2.5 font-bold p-2">Email</td>
-            <td className="pt-2.5 font-bold p-2">Admissão</td>
-            <td className="pt-2.5 font-bold p-2">Cargo</td>
-            <td className="pt-2.5 font-bold p-2">Detalhes</td>
+            <td className="pt-2.5 font-bold p-2">Nome do carro</td>
+            <td className="pt-2.5 font-bold p-2">KM inicial</td>
+            <td className="pt-2.5 font-bold p-2">KM atual</td>
+            <td className="pt-2.5 font-bold p-2">Ações</td>
           </tr>
         </thead>
         <tbody>
@@ -33,8 +33,7 @@ const VehiclesPage = async () => {
                 </div>
               </td>
               <td className="p-2">{vehicle.initialMileage}</td>
-              <td className="p-2">{vehicle.currentMileage}</td>
-              <td className="p-2">{vehicle.createdAt}</td>
+              <td className="p-2">{vehicle.actualMileage}</td>
               <td className="p-2">
                 <div className="flex gap-2.5">
                   <Link href={`/vehicles/${vehicle.id}`}>

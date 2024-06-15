@@ -6,7 +6,7 @@ const vehicleService = new VehicleService();
 
 export const fetchVehicles = async (): Promise<Vehicle[]> => {
   try {
-    const vehicles = await vehicleService.list();
+    const vehicles = await vehicleService.list();   
 
     return vehicles.data.vehicles as Vehicle[];
   } catch (error) {
