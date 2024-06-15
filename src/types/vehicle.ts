@@ -2,7 +2,7 @@ interface Vehicle {
   id: string,
   name: string,
   initialMileage: number,
-  currentMileage: number,
+  actualMileage: number,
   document: VehicleDocument,
   createdAt: string,
   updatedAt: string,
