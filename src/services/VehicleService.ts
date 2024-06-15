@@ -15,6 +15,10 @@ export class VehicleService {
     return axiosInstance.get("/v1/vehicles/" + id);
   }
 
+    update(id: string, data: any) {
+    return axiosInstance.put("/v1/vehicles/" + id, data);
+  }
+
 }
 
 export class VehicleDocumentService {
@@ -27,4 +31,7 @@ export class VehicleDocumentService {
     return axiosInstance.get("/v1/vehicles/"+ vehicleId + "/documents");
   }
 
+  updateByVehicleId(vehicleId: string, data: any) {
+    return axiosInstance.put("/v1/vehicles/" + vehicleId + "/documents", data);
+  }
 }
