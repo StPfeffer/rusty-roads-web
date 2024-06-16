@@ -2,10 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { fetchVehicles } from "@/actions/vehicle/fetchVehicles";
-import VehicleRow from "@/components/vehicle/VehicleRow";
 import ModalCreateVehicle from "@/components/vehicle/modalCreateVehicle";
 import { createVehicle } from "@/actions/vehicle/createVehicle";
-import { toast } from 'react-hot-toast';
+import { deleteVehicle } from "@/actions/vehicle/deleteVehicle";
+import toast from 'react-hot-toast';
+import Link from "next/link";
+import SeeMoreButton from "@/components/button/SeeMoreButton";
+import TrashButton from "@/components/button/TrashButton";
 
 const VehiclesPage = () => {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
@@ -48,6 +51,26 @@ const VehiclesPage = () => {
     }
   };
 
+  const handleDelete = async (vehicleId: string) => {
+    if (confirm("Are you sure you want to delete this vehicle?")) {
+      const response = await deleteVehicle(vehicleId);
+
+      if (response.error) {
+        toast.error(response.error.message);
+      } else {
+        toast.success('Vehicle deleted successfully!');
+
+        const fetchedVehicles = await fetchVehicles();
+
+        if (fetchedVehicles.error) {
+          toast.error(fetchedVehicles.error.message, { id: 'fetch-error' });
+        } else {
+          setVehicles(fetchedVehicles?.success?.data);
+        }
+      }
+    }
+  };
+
   return (
     <div className="bg-[color:var(--bgSoft)] p-5 mt-5 rounded-lg">
       <div className="flex justify-between items-center">
@@ -70,7 +93,23 @@ const VehiclesPage = () => {
         </thead>
         <tbody>
           {vehicles.map((vehicle) => (
-            <VehicleRow key={vehicle.id} vehicle={vehicle} />
+            <tr key={vehicle.id}>
+              <td className="p-2">
+                <div className="flex items-center gap-2.5">
+                  {vehicle.name}
+                </div>
+              </td>
+              <td className="p-2">{vehicle.initialMileage}</td>
+              <td className="p-2">{vehicle.actualMileage}</td>
+              <td className="p-2">
+                <div className="flex gap-2.5">
+                  <Link href={`/vehicles/${vehicle.id}`}>
+                    <SeeMoreButton />
+                  </Link>
+                  <TrashButton onClick={() => handleDelete(vehicle.id)} />
+                </div>
+              </td>
+            </tr>
           ))}
         </tbody>
       </table>

@@ -66,7 +66,7 @@ const ModalCreateVehicle: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit })
               <div className="mb-4">
                 <label className="block text-gray-200">KM Inicial</label>
                 <input
-                  type="vehicle.number"
+                  type="number"
                   name="vehicle.initialMileage"
                   value={vehicleData.vehicle.initialMileage}
                   onChange={handleInputChange}
