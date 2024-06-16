@@ -12,14 +12,13 @@ interface Props {
 const VehicleRow: React.FC<Props> = ({ vehicle }) => {
   const handleDelete = async () => {
     if (confirm("Are you sure you want to delete this vehicle?")) {
-      try {
-        await deleteVehicle(vehicle.id);
-        toast.success('Vehicle deleted successfully!');
-        // Ideally, you should refetch the vehicles or remove the deleted vehicle from the state
-        // For simplicity, we reload the page here
+      const response = await deleteVehicle(vehicle.id);
+
+      if (response.error) {
+        toast.error(response.error.message);
+      } else {
         window.location.reload();
-      } catch (error) {
-        toast.error('Failed to delete the vehicle. Please try again.');
+        toast.success('Vehicle deleted successfully!');
       }
     }
   };
