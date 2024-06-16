@@ -15,8 +15,12 @@ export class VehicleService {
     return axiosInstance.get("/v1/vehicles/" + id);
   }
 
-    update(id: string, data: any) {
+  update(id: string, data: any) {
     return axiosInstance.put("/v1/vehicles/" + id, data);
+  }
+
+  delete(id: string) {
+    return axiosInstance.delete("/v1/vehicles/" + id);
   }
 
 }
@@ -28,10 +32,15 @@ export class VehicleDocumentService {
   }
 
   findByVehicleId(vehicleId: string) {
-    return axiosInstance.get("/v1/vehicles/"+ vehicleId + "/documents");
+    return axiosInstance.get("/v1/vehicles/" + vehicleId + "/documents");
   }
 
   updateByVehicleId(vehicleId: string, data: any) {
     return axiosInstance.put("/v1/vehicles/" + vehicleId + "/documents", data);
   }
+
+  deleteByVehicleId(vehicleId: string) {
+    return axiosInstance.delete("/v1/vehicles/" + vehicleId + "/documents",);
+  }
+
 }
