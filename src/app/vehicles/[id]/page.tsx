@@ -138,11 +138,11 @@ const SingleVehiclePage: React.FC<Props> = ({ params }) => {
               </div>
               <div className="flex-col w-40">
                 <label>Ano de exercício</label>
-                <input className="w-full" type="text" name="exerciseYear" value={vehicleDoc.exerciseYear} onChange={handleVehicleDocChange} />
+                <input className="w-full" type="number" name="exerciseYear" value={vehicleDoc.exerciseYear} onChange={handleVehicleDocChange} />
               </div>
               <div className="flex-col w-40">
                 <label>Ano de Fabricação</label>
-                <input className="w-full" type="text" name="manufactureYear" value={vehicleDoc.manufactureYear} onChange={handleVehicleDocChange} />
+                <input className="w-full" type="number" name="manufactureYear" value={vehicleDoc.manufactureYear} onChange={handleVehicleDocChange} />
               </div>
             </div>
 
@@ -157,7 +157,7 @@ const SingleVehiclePage: React.FC<Props> = ({ params }) => {
               </div>
               <div className="flex-col w-40">
                 <label>Ano do modelo</label>
-                <input className="w-full" type="text" name="modelYear" value={vehicleDoc.modelYear} onChange={handleVehicleDocChange} />
+                <input className="w-full" type="number" name="modelYear" value={vehicleDoc.modelYear} onChange={handleVehicleDocChange} />
               </div>
               <div className="flex-col w-40">
                 <label>Cor</label>
