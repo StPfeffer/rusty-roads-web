@@ -2,8 +2,8 @@ import React from "react";
 
 import Image from "next/image";
 import Link from "next/link";
-import styles from "../../components/collaborator/collaborators.module.css";
 import { fetchCollaborators } from "@/actions/collaborator/fetchCollaborators";
+import SeeMoreButton from "@/components/button/SeeMoreButton";
 
 const CollaboratorsPage = async () => {
   const collaborators = await fetchCollaborators();
@@ -11,18 +11,16 @@ const CollaboratorsPage = async () => {
   return (
     <div className="bg-[color:var(--bgSoft)] p-5 mt-5 rounded-lg">
       <div className="flex justify-between items-center">
-        <Link href="/collaborators/add">
-          <button className="p-2.5 bg-[#5D57C9] border-none pointer rounded text-[color:var(--text)]" disabled>Adicionar</button>
-        </Link>
+        <button className="p-2.5 bg-[#5D57C9] border-none pointer rounded text-[color:var(--text)]" disabled>Adicionar</button>
       </div>
       <table className="w-full">
         <thead>
           <tr>
-            <td className="pt-2.5 font-bold p-2">Nome</td>
-            <td className="pt-2.5 font-bold p-2">Email</td>
-            <td className="pt-2.5 font-bold p-2">Admissão</td>
-            <td className="pt-2.5 font-bold p-2">Cargo</td>
-            <td className="pt-2.5 font-bold p-2">Detalhes</td>
+            <td className="pt-2.5 font-semibold p-2">Nome</td>
+            <td className="pt-2.5 font-semibold p-2">Email</td>
+            <td className="pt-2.5 font-semibold p-2">Admissão</td>
+            <td className="pt-2.5 font-semibold p-2">Cargo</td>
+            <td className="pt-2.5 font-semibold p-2">Detalhes</td>
           </tr>
         </thead>
         <tbody>
@@ -46,9 +44,7 @@ const CollaboratorsPage = async () => {
               <td className="p-2">
                 <div className="flex gap-2.5">
                   <Link href={`/collaborators/${collaborator.id}`}>
-                    <button className={`${styles.button} ${styles.view}`}>
-                      Ver mais
-                    </button>
+                    <SeeMoreButton />
                   </Link>
                 </div>
               </td>

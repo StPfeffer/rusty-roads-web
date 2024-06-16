@@ -13,6 +13,7 @@ import TrashButton from "@/components/button/TrashButton";
 const VehiclesPage = () => {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedVehicles, setSelectedVehicles] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,6 +72,49 @@ const VehiclesPage = () => {
     }
   };
 
+  const handleDeleteSelected = async () => {
+    if (confirm("Are you sure you want to delete the selected vehicles?")) {
+      const deletePromises = Array.from(selectedVehicles).map(id => deleteVehicle(id));
+      const responses = await Promise.all(deletePromises);
+
+      const errors = responses.filter(response => response.error);
+      if (errors.length > 0) {
+        errors.forEach(error => toast.error(error.error.message));
+      } else {
+        toast.success('Selected vehicles deleted successfully!');
+      }
+
+      const fetchedVehicles = await fetchVehicles();
+      if (fetchedVehicles.error) {
+        toast.error(fetchedVehicles.error.message, { id: 'fetch-error' });
+      } else {
+        setVehicles(fetchedVehicles?.success?.data);
+      }
+      setSelectedVehicles(new Set());
+    }
+  };
+
+  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const allSelected = e.target.checked;
+    if (allSelected) {
+      setSelectedVehicles(new Set(vehicles.map((vehicle) => vehicle.id)));
+    } else {
+      setSelectedVehicles(new Set());
+    }
+  };
+
+  const handleSelect = (id: string) => {
+    setSelectedVehicles((prev) => {
+      const newSelectedVehicles = new Set(prev);
+      if (newSelectedVehicles.has(id)) {
+        newSelectedVehicles.delete(id);
+      } else {
+        newSelectedVehicles.add(id);
+      }
+      return newSelectedVehicles;
+    });
+  };
+
   return (
     <div className="bg-[color:var(--bgSoft)] p-5 mt-5 rounded-lg">
       <div className="flex justify-between items-center">
@@ -80,29 +124,43 @@ const VehiclesPage = () => {
         >
           Adicionar
         </button>
+        {selectedVehicles.size > 0 && (
+          <button
+            className="p-2.5 bg-red-500 border-none pointer rounded text-[color:var(--text)]"
+            onClick={handleDeleteSelected}
+          >
+            Excluir {selectedVehicles.size}
+          </button>
+        )}
       </div>
       {isModalOpen && <ModalCreateVehicle isOpen={isModalOpen} onClose={closeModal} onSubmit={handleCreate} />}
       <table className="w-full">
-        <thead>
-          <tr>
-            <th className="pt-2.5 font-semibold p-2">Nome do carro</th>
-            <th className="pt-2.5 font-semibold p-2">KM inicial</th>
-            <th className="pt-2.5 font-semibold p-2">KM atual</th>
-            <th className="pt-2.5 font-semibold p-2">Ações</th>
+        <thead className="w-full">
+          <tr className="w-full">
+            <th className="font-semibold p-2 text-left">
+              <input type="checkbox" onChange={handleSelectAll} checked={selectedVehicles.size === vehicles.length} />
+            </th>
+            <th className="font-semibold p-2 text-left">Nome do carro</th>
+            <th className="font-semibold p-2 text-left">KM inicial</th>
+            <th className="font-semibold p-2 text-left">KM atual</th>
+            <th className="font-semibold p-2 text-right">Ações</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="w-full">
           {vehicles.map((vehicle) => (
-            <tr key={vehicle.id}>
-              <td className="p-2">
-                <div className="flex items-center gap-2.5">
-                  {vehicle.name}
-                </div>
+            <tr key={vehicle.id} className="w-full">
+              <td className="p-2 text-left">
+                <input
+                  type="checkbox"
+                  checked={selectedVehicles.has(vehicle.id)}
+                  onChange={() => handleSelect(vehicle.id)}
+                />
               </td>
-              <td className="p-2">{vehicle.initialMileage}</td>
-              <td className="p-2">{vehicle.actualMileage}</td>
-              <td className="p-2">
-                <div className="flex gap-2.5">
+              <td className="p-2 text-left">{vehicle.name}</td>
+              <td className="p-2 text-left">{vehicle.initialMileage}</td>
+              <td className="p-2 text-left">{vehicle.actualMileage}</td>
+              <td className="p-2 text-right">
+                <div className="justify-center gap-1">
                   <Link href={`/vehicles/${vehicle.id}`}>
                     <SeeMoreButton />
                   </Link>
