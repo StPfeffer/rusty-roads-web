@@ -4,14 +4,12 @@ import { VehicleDocumentService } from "@/services/VehicleService";
 
 const vehicleDocService = new VehicleDocumentService();
 
-export const updateVehicleDocument = async (vehicleId: string, data: Partial<VehicleDocument>): Promise<VehicleDocument> => {
-    try {
-      const response = await vehicleDocService.updateByVehicleId(vehicleId, data);
-  
-      return response.data as VehicleDocument;
-    } catch (err) {
-      console.log(err);
-  
-      throw new Error("Não foi possível atualizar o veículo!");
-    }
-  };
+export const updateVehicleDocument = async (vehicleId: string, data: Partial<VehicleDocument>): Promise<ActionResponse> => {
+  try {
+    await vehicleDocService.updateByVehicleId(vehicleId, data);
+
+    return { success: { message: "Vehicle document updated successfully" } };
+  } catch (error: any) {
+    return { error: { message: error.response?.data?.error?.message || error.message } };
+  }
+};

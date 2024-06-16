@@ -3,18 +3,23 @@
 import Link from 'next/link';
 import styles from "../../components/collaborator/collaborators.module.css";
 import { deleteVehicle } from "@/actions/vehicle/deleteVehicle";
+import toast from 'react-hot-toast';
 
-const VehicleRow = ({ vehicle }) => {
+interface Props {
+  vehicle: Vehicle;
+}
+
+const VehicleRow: React.FC<Props> = ({ vehicle }) => {
   const handleDelete = async () => {
     if (confirm("Are you sure you want to delete this vehicle?")) {
       try {
         await deleteVehicle(vehicle.id);
-        alert('Vehicle deleted successfully!');
+        toast.success('Vehicle deleted successfully!');
         // Ideally, you should refetch the vehicles or remove the deleted vehicle from the state
         // For simplicity, we reload the page here
         window.location.reload();
       } catch (error) {
-        alert('Failed to delete the vehicle. Please try again.');
+        toast.error('Failed to delete the vehicle. Please try again.');
       }
     }
   };

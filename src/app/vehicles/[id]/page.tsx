@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import styles from "../../../components/collaborator/singleCollaborator/singleCollaborator.module.css";
 import Image from "next/image";
 import { fetchVehicle } from '@/actions/vehicle/fetchVehicles';
@@ -8,77 +8,92 @@ import { fetchVehicleDoc } from '@/actions/vehicle/fetchVehiclesDocuments';
 import { format } from 'date-fns';
 import { updateVehicle } from '@/actions/vehicle/updateVehicle';
 import { updateVehicleDocument } from '@/actions/vehicle/updateVehicleDocument';
+import toast from 'react-hot-toast';
 
-const SingleVehiclePage = ({ params }) => {
+interface Props {
+  params: {
+    id: string;
+  };
+}
+
+const SingleVehiclePage: React.FC<Props> = ({ params }) => {
   const { id } = params;
 
-  const [vehicle, setVehicle] = useState(null);
-  const [vehicleDoc, setVehicleDoc] = useState(null);
-  const [isVehicleModified, setIsVehicleModified] = useState(false);
-  const [isVehicleDocModified, setIsVehicleDocModified] = useState(false);
+  const [vehicle, setVehicle] = useState<Vehicle | null>(null);
+  const [vehicleDoc, setVehicleDoc] = useState<VehicleDocument | null>(null);
+  const [isVehicleModified, setIsVehicleModified] = useState<boolean>(false);
+  const [isVehicleDocModified, setIsVehicleDocModified] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const initialVehicle = await fetchVehicle(id);
-        const initialVehicleDoc = await fetchVehicleDoc(id);
-        setVehicle(initialVehicle);
-        setVehicleDoc(initialVehicleDoc);
-      } catch (err) {
-        console.error('Error fetching vehicle data:', err);
+      const initialVehicle = await fetchVehicle(id);
+      const initialVehicleDoc = await fetchVehicleDoc(id);
+
+      if (initialVehicle.error) {
+        toast.error(initialVehicle.error.message, { id: 'fetch-vehicle-error' });
+      } else {
+        setVehicle(initialVehicle.success?.data);
+      }
+
+      if (initialVehicleDoc.error) {
+        toast.error(initialVehicleDoc.error.message, { id: 'fetch-document-error' });
+      } else {
+        setVehicleDoc(initialVehicleDoc.success?.data);
       }
     };
     fetchData();
   }, [id]);
 
-  const handleVehicleChange = (e) => {
+  const handleVehicleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setVehicle((prevVehicle) => ({
-      ...prevVehicle,
+      ...prevVehicle!,
       [name]: value,
     }));
     setIsVehicleModified(true);
   };
 
-  const handleVehicleDocChange = (e) => {
+  const handleVehicleDocChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setVehicleDoc((prevVehicleDoc) => ({
-      ...prevVehicleDoc,
+      ...prevVehicleDoc!,
       [name]: value,
     }));
     setIsVehicleDocModified(true);
   };
 
-  const handleVehicleSubmit = async (e) => {
+  const handleVehicleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      await updateVehicle(id, vehicle);
+
+    const response = await updateVehicle(id, vehicle!);
+
+    if (response.error) {
+      toast.error(response.error.message, { id: 'update-vehicle-error' });
+    } else {
       setIsVehicleModified(false);
-      alert('Vehicle updated successfully!');
-    } catch (err) {
-      console.error('Error updating vehicle:', err);
-      alert('Failed to update vehicle');
+      toast.success('Vehicle updated successfully!');
     }
   };
 
-  const handleVehicleDocSubmit = async (e) => {
+  const handleVehicleDocSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      await updateVehicleDocument(id, vehicleDoc);
+
+    const response = await updateVehicleDocument(id, vehicleDoc!);
+
+    if (response.error) {
+      toast.error(response.error.message, { id: 'update-document-error' });
+    } else {
       setIsVehicleDocModified(false);
-      alert('Vehicle document updated successfully!');
-    } catch (err) {
-      console.error('Error updating vehicle document:', err);
-      alert('Failed to update vehicle document');
+      toast.success("Vehicle document updated successfully!");
     }
   };
 
-  const formatDate = (dateString) => {
+  const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return format(date, 'dd/MM/yyyy HH:mm:ss');
   };
 
-  if (!vehicle || !vehicleDoc) {
+  if (!vehicle) {
     return <div>Loading...</div>;
   }
 
@@ -101,14 +116,14 @@ const SingleVehiclePage = ({ params }) => {
             <label>KM atual</label>
             <input type="text" name="actualMileage" value={vehicle.actualMileage} onChange={handleVehicleChange} disabled />
             <label>KM inicial</label>
-            <input type="text" name="initialMileage" value={vehicle.initialMileage} onChange={handleVehicleChange} disabled  />
+            <input type="text" name="initialMileage" value={vehicle.initialMileage} onChange={handleVehicleChange} disabled />
             <button type="submit" disabled={!isVehicleModified}>Atualizar</button>
           </form>
         </div>
 
         <p className="h-8" />
 
-        <div id="documentos" className={styles.formContainer}>
+        {vehicleDoc && <div id="documentos" className={styles.formContainer}>
           <h2 className="text-2xl mb-4">Documentos do Veículo</h2>
           <form className={styles.form} onSubmit={handleVehicleDocSubmit}>
             <input type="hidden" name="id" value={vehicleDoc.id} />
@@ -155,12 +170,12 @@ const SingleVehiclePage = ({ params }) => {
             </div>
             <button type="submit" disabled={!isVehicleDocModified}>Atualizar</button>
           </form>
-        </div>
+        </div>}
 
         <div className="mt-4 flex">
           <p className="text-slate-400">Criado em: {formatDate(vehicle.createdAt)}</p>
           <p className="pl-4 text-slate-400">Veículo atualizado em: {formatDate(vehicle.updatedAt)}</p>
-          <p className="pl-4 text-slate-400">Documento atualizado em: {formatDate(vehicleDoc.updatedAt)}</p>
+          {vehicleDoc && <p className="pl-4 text-slate-400">Documento atualizado em: {formatDate(vehicleDoc.updatedAt)}</p>}
         </div>
       </div>
     </div>

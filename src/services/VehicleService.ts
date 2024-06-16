@@ -15,6 +15,10 @@ export class VehicleService {
     return axiosInstance.get("/v1/vehicles/" + id);
   }
 
+  create(data: any) {
+    return axiosInstance.post("/v1/vehicles", data);
+  }
+
   update(id: string, data: any) {
     return axiosInstance.put("/v1/vehicles/" + id, data);
   }
@@ -29,6 +33,10 @@ export class VehicleDocumentService {
 
   list() {
     return axiosInstance.get("/v1/documents");
+  }
+
+  create(vehicleId: string, data: any) {
+    return axiosInstance.post("/v1/vehicles/" + vehicleId + "/documents", data);
   }
 
   findByVehicleId(vehicleId: string) {
