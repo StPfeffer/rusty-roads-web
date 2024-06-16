@@ -1,9 +1,8 @@
 import React from "react";
 
 import Link from "next/link";
-import styles from "../../components/collaborator/collaborators.module.css";
 import { fetchVehicles } from "@/actions/vehicle/fetchVehicles";
-import { fetchVehicleDoc, fetchVehiclesDocs } from "@/actions/vehicle/fetchVehiclesDocuments";
+import VehicleRow from "@/components/vehicle/VehicleRow";
 
 const VehiclesPage = async () => {
   const vehicles = await fetchVehicles();
@@ -26,24 +25,7 @@ const VehiclesPage = async () => {
         </thead>
         <tbody>
           {vehicles.map((vehicle) => (
-            <tr key={vehicle.id}>
-              <td className="p-2">
-                <div className="flex items-center gap-2.5">
-                  {vehicle.name}
-                </div>
-              </td>
-              <td className="p-2">{vehicle.initialMileage}</td>
-              <td className="p-2">{vehicle.actualMileage}</td>
-              <td className="p-2">
-                <div className="flex gap-2.5">
-                  <Link href={`/vehicles/${vehicle.id}`}>
-                    <button className={`${styles.button} ${styles.view}`}>
-                      Ver mais
-                    </button>
-                  </Link>
-                </div>
-              </td>
-            </tr>
+            <VehicleRow key={vehicle.id} vehicle={vehicle} />
           ))}
         </tbody>
       </table>
