@@ -15,4 +15,16 @@ export class CollaboratorService {
     return axiosInstance.get("/v1/collaborators/" + id);
   }
 
+  create(data: any) {
+    return axiosInstance.post("/v1/collaborators", data);
+  }
+
+  update(id: string, data: any) {
+    return axiosInstance.put("/v1/collaborators/" + id, data);
+  }
+
+  delete(id: string) {
+    return axiosInstance.delete("/v1/collaborators/" + id);
+  }
+
 }
