@@ -118,7 +118,7 @@ const SingleVehiclePage: React.FC<Props> = ({ params }) => {
             <label>Nome</label>
             <input type="text" name="name" value={vehicle.name} onChange={handleVehicleChange} />
             <label>KM atual</label>
-            <input type="text" name="actualMileage" value={vehicle.actualMileage} onChange={handleVehicleChange} disabled />
+            <input type="text" name="actualMileage" value={vehicle.actualMileage / 1000} onChange={handleVehicleChange} disabled />
             <label>KM inicial</label>
             <input type="text" name="initialMileage" value={vehicle.initialMileage} onChange={handleVehicleChange} disabled />
             <button type="submit" disabled={!isVehicleModified}>Atualizar</button>

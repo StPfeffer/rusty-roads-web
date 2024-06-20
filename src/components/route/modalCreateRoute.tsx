@@ -51,14 +51,14 @@ const ModalCreateRoute: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) =
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
+      console.log(name);  
     switch (name) {
-      case 'driverId':
+      case 'route.driverId':
         const selectedDriver = allDrivers?.find(driver => driver.id === value);
         console.log(selectedDriver);
         setSelectedDriver(selectedDriver ? selectedDriver : null);
         break;
-      case 'vehicleId':
+      case 'route.vehicleId':
         const selectedVehicle = allVehicles?.find(vehicle => vehicle.id === value);
         setSelectedVehicle(selectedVehicle ? selectedVehicle : null);
         break;

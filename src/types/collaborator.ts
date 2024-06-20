@@ -12,9 +12,9 @@ interface Collaborator {
 interface Driver {
   id: string,
   name?: string,
-  cnh_number: string,
-  cnh_expiration_date: string,
-  id_cnh_type: string,
+  cnhNumber: string,
+  cnhExpirationDate: string,
+  idCnhType: string,
   collaboratorId: string,
   createdAt: string,
   updatedAt: string,

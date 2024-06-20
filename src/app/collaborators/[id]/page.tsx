@@ -9,6 +9,7 @@ import { updateDriver } from '@/actions/collaborator/updateDriver';
 import { fetchCollaborator } from '@/actions/collaborator/fetchCollaborators';
 import { fetchDriverByCollaboratorId } from '@/actions/collaborator/fetchDrivers';
 import Image from 'next/image';
+import { fetchCnhTypes } from '@/actions/collaborator/fetchCnhType';
 
 interface Props {
   params: {
@@ -17,6 +18,9 @@ interface Props {
 }
 
 const SingleCollaboratorPage: React.FC<Props> = ({ params }) => {
+  const [allCnhTypes, setAllCnhTypes] = useState<CnhType[] | null>([]);
+  const [selectedCnhType, setSelectedCnhType] = useState<CnhType | null>(null);
+
   const { id } = params;
 
   const [collaborator, setCollaborator] = useState<Collaborator | null>(null);
@@ -25,6 +29,17 @@ const SingleCollaboratorPage: React.FC<Props> = ({ params }) => {
   const [isDriverModified, setIsDriverModified] = useState<boolean>(false);
 
   useEffect(() => {
+    const fetchCnhTypes2 = async () => {
+      const cnhTypes = await fetchCnhTypes();
+
+      if (cnhTypes.error) {
+        toast.error(cnhTypes.error.message, { id: 'fetch-route-error' });
+      } else {
+        setAllCnhTypes(cnhTypes.success?.data);
+      }
+    };
+    fetchCnhTypes2();
+
     const fetchData = async () => {
       const initialCollaborator = await fetchCollaborator(id);
       const initialDriver = await fetchDriverByCollaboratorId(id);
@@ -55,6 +70,16 @@ const SingleCollaboratorPage: React.FC<Props> = ({ params }) => {
 
   const handleDriverChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
+    switch (name) {
+      case 'idCnhType':
+        const selectedCnhType = allCnhTypes?.find(cnhType => cnhType.id === value);
+        setSelectedCnhType(selectedCnhType ? selectedCnhType : null);
+        break;
+      default:
+        break;
+    }
+
     setDriver((prevDriver) => ({
       ...prevDriver!,
       [name]: value,
@@ -136,15 +161,28 @@ const SingleCollaboratorPage: React.FC<Props> = ({ params }) => {
             <div className="flex justify-between">
               <div className="flex-col w-60">
                 <label>Número da CNH</label>
-                <input className="w-full" type="text" name="cnhNumber" value={driver.cnh_number} onChange={handleDriverChange} />
+                <input className="w-full" type="text" name="cnhNumber" value={driver.cnhNumber} onChange={handleDriverChange} />
               </div>
               <div className="flex-col w-[22rem]">
                 <label>Expiração da CNH</label>
-                <input className="w-full" type="text" name="cnhExpirationDate" value={driver.cnh_expiration_date} onChange={handleDriverChange} />
+                <input className="w-full" type="text" name="cnhExpirationDate" value={driver.cnhExpirationDate} onChange={handleDriverChange} />
               </div>
               <div className="flex-col w-40">
                 <label>Tipo da CNH</label>
-                <input className="w-full" type="number" name="cnhType" value={driver.id_cnh_type} onChange={handleDriverChange} />
+                <select className="w-full px-3 py-2 border rounded bg-gray-200 text-black" name="idCnhType" value={selectedCnhType?.id || ''} onChange={handleDriverChange}>
+                    {selectedCnhType && (
+                      <option value={selectedCnhType.id}>
+                        {selectedCnhType.description}
+                      </option>
+                    )}
+                    {allCnhTypes && allCnhTypes
+                      .filter(cnhType => cnhType.id !== selectedCnhType?.id)
+                      .map((cnhType) => (
+                        <option key={cnhType.id} value={cnhType.id}>
+                          {cnhType.description}
+                        </option>
+                      ))}
+                  </select>
               </div>
             </div>
             <button type="submit" disabled={!isDriverModified}>Atualizar</button>

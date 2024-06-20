@@ -158,7 +158,7 @@ const VehiclesPage = () => {
               </td>
               <td className="p-2 text-left">{vehicle.name}</td>
               <td className="p-2 text-left">{vehicle.initialMileage}</td>
-              <td className="p-2 text-left">{vehicle.actualMileage}</td>
+              <td className="p-2 text-left">{vehicle.actualMileage / 1000}</td>
               <td className="p-2 text-right">
                 <div className="justify-center gap-1">
                   <Link href={`/vehicles/${vehicle.id}`}>
