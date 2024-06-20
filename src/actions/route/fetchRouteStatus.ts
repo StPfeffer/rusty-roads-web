@@ -4,24 +4,23 @@ import { RouteService } from "@/services/RouteService";
 
 const routeService = new RouteService();
 
-export const fetchRoutes = async (): Promise<ActionResponse> => {
+export const fetchRoutesStatuses = async (): Promise<ActionResponse> => {
   try {
-    const routes = await routeService.list();
+    const statuses = await routeService.listStatus();
 
-    return { success: { message: "", data: routes.data.routes as Route[] } };
+    return { success: { message: "", data: statuses.data.routes as Route[] } };
   } catch (error: any) {
     return { error: { message: "An error occurred when trying to search for routes, please try again later", data: [] } };
   }
 
 };
 
-export const fetchRoute = async (id: string): Promise<ActionResponse> => {
+export const fetchRouteStatus = async (statusId: string): Promise<ActionResponse> => {
   try {
-    const route = await routeService.findById(id);
+    const status = await routeService.findStatusById(statusId);
 
-    return { success: { message: "", data: route.data as Route } };
+    return { success: { message: "", data: status.data as RouteStatus } };
   } catch (error: any) {
-    console.error(error);
     return { error: { message: "An error occurred when trying get the route, please try again later", data: null } };
   }
 

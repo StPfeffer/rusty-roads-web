@@ -6,8 +6,9 @@ import toast from 'react-hot-toast';
 import { format } from 'date-fns';
 import { fetchRoute } from '@/actions/route/fetchRoutes';
 import { updateRoute } from '@/actions/route/updateRoute';
-import { fetchDrivers } from '@/actions/collaborator/fetchDrivers';
-import { fetchVehicles } from '@/actions/veh/fetchDrivers';
+import { fetchDriver, fetchDrivers } from '@/actions/collaborator/fetchDrivers';
+import { fetchVehicle, fetchVehicles } from '@/actions/vehicle/fetchVehicles';
+import { fetchRouteStatus } from '@/actions/route/fetchRouteStatus';
 
 interface Props {
   params: {
@@ -36,32 +37,44 @@ const SingleRoutePage: React.FC<Props> = ({ params }) => {
       if (initialRoute.error) {
         toast.error(initialRoute.error.message, { id: 'fetch-route-error' });
       } else {
-        setRoute(initialRoute.success?.data);
+        const data = initialRoute.success?.data;
+
+        const routeDriver = await fetchDriver(data.driverId);
+        const routeVehicle = await fetchVehicle(data.vehicleId);
+        const routeStatus = await fetchRouteStatus(data.statusId);
+
+        console.log(routeStatus);
+
+        data.driver = routeDriver.success?.data;
+        data.vehicle = routeVehicle.success?.data;
+        data.status = routeStatus.success?.data;
+
+        setRoute(data);
       }
     };
     fetchData();
 
-    const fetchDrivers = async () => {
+    const fetchData2 = async () => {
       const drivers = await fetchDrivers();
 
       if (drivers.error) {
-        toast.error(initialRoute.error.message, { id: 'fetch-route-error' });
+        toast.error(drivers.error.message, { id: 'fetch-route-error' });
       } else {
         setAllDrivers(drivers.success?.data);
       }
     };
-    fetchDrivers();
+    fetchData2();
 
-    const fetchVehicles = async () => {
-      const drivers = await fetchVehicles();
+    const fetchData3 = async () => {
+      const vehicles = await fetchVehicles();
 
-      if (drivers.error) {
-        toast.error(initialRoute.error.message, { id: 'fetch-route-error' });
+      if (vehicles.error) {
+        toast.error(vehicles.error.message, { id: 'fetch-route-error' });
       } else {
-        setAllVehicles(drivers.success?.data);
+        setAllVehicles(vehicles.success?.data);
       }
     };
-    fetchVehicles();
+    fetchData3();
   }, [id]);
 
   const handleRouteChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -104,7 +117,7 @@ const SingleRoutePage: React.FC<Props> = ({ params }) => {
             <div className="flex gap-4 justify-normal">
               <div className="flex-col w-full">
                 <label>Data / hora de início</label>
-                <input className="w-full" type="text" name="startedAt" value={route.startedAt} onChange={handleRouteChange} disabled/>
+                <input className="w-full" type="text" name="startedAt" value={route.startedAt} onChange={handleRouteChange} disabled />
               </div>
               <div className="flex-col w-full">
                 <label>Data / hora de chegada</label>
@@ -112,22 +125,22 @@ const SingleRoutePage: React.FC<Props> = ({ params }) => {
               </div>
               <div className="flex-col w-full">
                 <label>Distância percorrida</label>
-                <input className="w-full" type="text" name="distance" value={(route.totalDistance /1000).toFixed(2)} onChange={handleRouteChange} disabled />
+                <input className="w-full" type="text" name="distance" value={(route.totalDistance / 1000).toFixed(2)} onChange={handleRouteChange} disabled />
               </div>
             </div>
 
             <div className="flex gap-4 justify-normal">
               <div className="flex-col  w-full">
                 <label>Motorista</label>
-                <input className="w-full" type="text" name="driver" value={route.driverId} onChange={handleRouteChange}  />              
+                <input className="w-full" type="text" name="driver" value={route.driver?.name ? route.driver?.name : ''} onChange={handleRouteChange} />
               </div>
               <div className="flex-col w-full">
                 <label>Veículo</label>
-                <input className="w-full" type="text" name="vehicle" value={route.vehicleId} onChange={handleRouteChange}  />
+                <input className="w-full" type="text" name="vehicle" value={route.vehicleId} onChange={handleRouteChange} />
               </div>
               <div className="flex-col w-full">
                 <label>Status da rota</label>
-                <input className="w-full" type="text" name="status" value={route.statusId} onChange={handleRouteChange} />          
+                <input className="w-full" type="text" name="status" value={route.statusId} onChange={handleRouteChange} />
               </div>
             </div>
 
@@ -143,7 +156,7 @@ const SingleRoutePage: React.FC<Props> = ({ params }) => {
             <div className="flex gap-4 justify-normal">
               <div className="flex-col w-full">
                 <label>Data / hora de início</label>
-                <input className="w-full" type="text" name="intialLat" value={route.initialLat} onChange={handleRouteChange} disabled/>
+                <input className="w-full" type="text" name="intialLat" value={route.initialLat} onChange={handleRouteChange} disabled />
               </div>
               <div className="flex-col w-full">
                 <label>Data / hora de chegada</label>
@@ -158,15 +171,15 @@ const SingleRoutePage: React.FC<Props> = ({ params }) => {
             <div className="flex gap-4 justify-normal">
               <div className="flex-col w-full">
                 <label>Motorista</label>
-                <input className="w-full" type="text" name="driver" value={route.driverId} onChange={handleRouteChange}  />              
+                <input className="w-full" type="text" name="driver" value={route.driver?.name ? route.driver?.name : ''} onChange={handleRouteChange} />
               </div>
               <div className="flex-col w-full">
                 <label>Veículo</label>
-                <input className="w-full" type="text" name="vehicle" value={route.vehicleId} onChange={handleRouteChange}  />
+                <input className="w-full" type="text" name="vehicle" value={route.vehicle.name ? route.vehicle.name : ''} onChange={handleRouteChange} />
               </div>
               <div className="flex-col w-full">
                 <label>Status da rota</label>
-                <input className="w-full" type="text" name="status" value={route.statusId} onChange={handleRouteChange} />          
+                <input className="w-full" type="text" name="status" value={route.status?.description ? route.status?.description : ''} onChange={handleRouteChange} />
               </div>
             </div>
 
@@ -174,7 +187,7 @@ const SingleRoutePage: React.FC<Props> = ({ params }) => {
           </form>
         </div>
 
-{/* 
+        {/* 
         {vehicleDoc && <div id="documentos" className={styles.formContainer}>
           <h2 className="text-2xl mb-4">Documentos do Veículo</h2>
           <form className={styles.form} onSubmit={handleVehicleDocSubmit}>

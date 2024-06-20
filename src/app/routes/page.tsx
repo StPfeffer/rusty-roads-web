@@ -17,7 +17,6 @@ const RoutesPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const fetchedRoutes = await fetchRoutes();
-      console.log(fetchedRoutes)
 
       if (fetchedRoutes.error) {
         toast.error(fetchedRoutes.error.message, { id: 'fetch-error' });

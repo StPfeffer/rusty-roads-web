@@ -1,8 +1,10 @@
 "use server";
 
+import { CollaboratorService } from "@/services/CollaboratorService";
 import { DriverService } from "@/services/DriverService";
 
 const driverService = new DriverService();
+const collaboratorService = new CollaboratorService();
 
 export const fetchDrivers = async (): Promise<ActionResponse> => {
   try {
@@ -16,7 +18,10 @@ export const fetchDrivers = async (): Promise<ActionResponse> => {
 
 export const fetchDriverByCollaboratorId = async (collaboratorId: string): Promise<ActionResponse> => {
   try {
+    const collaborator = await collaboratorService.findById(collaboratorId);
     const driver = await driverService.findByCollaboratorId(collaboratorId);
+
+    (driver.data as Driver).name = (collaborator.data as Collaborator).name
 
     return { success: { message: "", data: driver.data as Driver } };
   } catch (error: any) {

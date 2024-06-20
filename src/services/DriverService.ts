@@ -12,7 +12,7 @@ export class DriverService {
   }
 
   findById(id: string) {
-    return axiosInstance.get("/v1/collaborators/drivers" + id);
+    return axiosInstance.get("/v1/collaborators/drivers/" + id);
   }
 
   updateById(id: string, data: any) {

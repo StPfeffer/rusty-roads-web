@@ -130,7 +130,7 @@ const SingleCollaboratorPage: React.FC<Props> = ({ params }) => {
         <p className="h-8" />
 
         {driver && <div id="documentos" className={styles.formContainer}>
-          <h2 className="text-2xl mb-4">Documentos do Veículo</h2>
+          <h2 className="text-2xl mb-4">Documentos do Motorista</h2>
           <form className={styles.form} onSubmit={handleVehicleDocSubmit}>
             <input type="hidden" name="id" value={driver.id} />
             <div className="flex justify-between">
@@ -146,8 +146,8 @@ const SingleCollaboratorPage: React.FC<Props> = ({ params }) => {
                 <label>Tipo da CNH</label>
                 <input className="w-full" type="number" name="cnhType" value={driver.id_cnh_type} onChange={handleDriverChange} />
               </div>
-              <button type="submit" disabled={!isDriverModified}>Atualizar</button>
             </div>
+            <button type="submit" disabled={!isDriverModified}>Atualizar</button>
           </form>
         </div>}
 
