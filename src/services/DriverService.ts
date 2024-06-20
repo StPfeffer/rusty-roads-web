@@ -15,4 +15,28 @@ export class DriverService {
     return axiosInstance.get("/v1/collaborators/drivers" + id);
   }
 
+  updateById(id: string, data: any) {
+    return axiosInstance.put("/v1/collaborators/drivers/" + id);
+  }
+
+  deleteById(id: string) {
+    return axiosInstance.delete("/v1/collaborators/drivers/" + id);
+  }
+
+  findByCollaboratorId(collaboratorId: string) {
+    return axiosInstance.get("/v1/collaborators/" + collaboratorId + "/drivers");
+  }
+
+  updateByCollaboratorId(collaboratorId: string, data: any) {
+    return axiosInstance.put("/v1/collaborators/" + collaboratorId + "/drivers", data);
+  }
+
+  deleteByCollaboratorId(collaboratorId: string) {
+    return axiosInstance.delete("/v1/collaborators/" + collaboratorId + "/drivers");
+  }
+
+  create(collaboratorId: string, data: any) {
+    return axiosInstance.post("/v1/collaborators/" + collaboratorId + "/driver", data);
+  }
+
 }

@@ -4,28 +4,32 @@ import { DriverService } from "@/services/DriverService";
 
 const driverService = new DriverService();
 
-export const fetchDrivers = async (): Promise<Driver[]> => {
+export const fetchDrivers = async (): Promise<ActionResponse> => {
   try {
     const drivers = await driverService.list();
 
-    return drivers.data.drivers as Driver[];
+    return { success: { message: "", data: drivers.data.collaborators as Driver[] } };
   } catch (error) {
-    console.log(error);
-
-    return [];
+    return { error: { message: "An error occurred when trying to search for drivers, please try again later", data: [] } };
   }
-
 };
 
-export const fetchDriver = async (id: string): Promise<Driver> => {
+export const fetchDriverByCollaboratorId = async (collaboratorId: string): Promise<ActionResponse> => {
   try {
-    const driver = await driverService.findById(id);
+    const driver = await driverService.findByCollaboratorId(collaboratorId);
 
-    return driver.data as Driver;
-  } catch (err) {
-    console.log(err);
-
-    throw new Error("Não foi possível encontrar o motorista!");
+    return { success: { message: "", data: driver.data as Driver } };
+  } catch (error: any) {
+    return { error: { message: "An error occurred when trying get the driver, please try again later", data: null } };
   }
+};
 
+export const fetchDriver = async (driverId: string): Promise<ActionResponse> => {
+  try {
+    const driver = await driverService.findById(driverId);
+
+    return { success: { message: "", data: driver.data as Driver } };
+  } catch (error: any) {
+    return { error: { message: "An error occurred when trying get the driver, please try again later", data: null } };
+  }
 };
