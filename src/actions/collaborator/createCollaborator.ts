@@ -6,14 +6,19 @@ import { DriverService } from "@/services/DriverService";
 const collaboratorService = new CollaboratorService();
 const driverService = new DriverService();
 
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 export const createCollaborator = async (collaboratorData: CreateCollaboratorData): Promise<ActionResponse> => {
   try {
     const collaborator = await collaboratorService.create(collaboratorData.collaborator);
 
     const collaboratorId: string = collaborator.data.id;
+    collaboratorData.driver.collaboratorId = collaboratorId;
+
+    console.log(collaboratorData);
 
     try {
-      await driverService.create(collaboratorId, collaboratorData.driver);
+      await driverService.create(collaboratorData.driver);
     } catch (error: any) {
       await collaboratorService.delete(collaboratorId);
 

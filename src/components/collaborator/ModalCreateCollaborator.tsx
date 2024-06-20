@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { fetchCnhTypes } from "@/actions/collaborator/fetchCnhType";
+import { ChangeEvent, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 interface ModalProps {
   isOpen: boolean;
@@ -7,6 +9,9 @@ interface ModalProps {
 }
 
 const ModalCreateCollaborator: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
+  const [allCnhTypes, setAllCnhTypes] = useState<CnhType[] | null>([]);
+  const [selectedCnhType, setSelectedCnhType] = useState<CnhType | null>(null);
+
   const [collaboratorData, setCollaboratorData] = useState<CreateCollaboratorData>({
     collaborator: {
       name: '',
@@ -15,16 +20,43 @@ const ModalCreateCollaborator: React.FC<ModalProps> = ({ isOpen, onClose, onSubm
       email: '',
     },
     driver: {
-      cnh_number: '',
-      cnh_expiration_date: '',
-      id_cnh_type: '',
+      cnhNumber: '',
+      cnhExpirationDate: '',
+      idCnhType: '',
+      collaboratorId: ''
     }
   });
 
+  useEffect(() => {
+    const fetchCnhTypes2 = async () => {
+      const cnhTypes = await fetchCnhTypes();
+
+      if (cnhTypes.error) {
+        toast.error(cnhTypes.error.message, { id: 'fetch-route-error' });
+      } else {
+        setAllCnhTypes(cnhTypes.success?.data);
+      }
+    };
+    fetchCnhTypes2();
+  }, []);
+
   if (!isOpen) return null;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
+    console.log(name);
+    console.log(value);
+
+    switch (name) {
+      case 'driver.idCnhType':
+        console.log("aqui");
+        const selectedCnhType = allCnhTypes?.find(cnhType => cnhType.id === value);
+        setSelectedCnhType(selectedCnhType ? selectedCnhType : null);
+        break;
+      default:
+        break;
+    }
     const [section, field] = name.split('.');
     setCollaboratorData((prevState) => ({
       ...prevState,
@@ -33,7 +65,7 @@ const ModalCreateCollaborator: React.FC<ModalProps> = ({ isOpen, onClose, onSubm
         [field]: value,
       },
     }));
-  };
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,7 +86,7 @@ const ModalCreateCollaborator: React.FC<ModalProps> = ({ isOpen, onClose, onSubm
                   type="text"
                   name="collaborator.name"
                   value={collaboratorData.collaborator.name}
-                  onChange={handleInputChange}
+                  onChange={handleChange}
                   className="w-full px-3 py-2 border rounded bg-gray-200 text-black"
                   placeholder="Nome"
                 />
@@ -65,7 +97,7 @@ const ModalCreateCollaborator: React.FC<ModalProps> = ({ isOpen, onClose, onSubm
                   type="number"
                   name="collaborator.cpf"
                   value={collaboratorData.collaborator.cpf}
-                  onChange={handleInputChange}
+                  onChange={handleChange}
                   className="w-full px-3 py-2 border rounded bg-gray-200 text-black"
                   placeholder="O CPF do colaborador"
                 />
@@ -76,7 +108,7 @@ const ModalCreateCollaborator: React.FC<ModalProps> = ({ isOpen, onClose, onSubm
                   type="number"
                   name="collaborator.rg"
                   value={collaboratorData.collaborator.rg}
-                  onChange={handleInputChange}
+                  onChange={handleChange}
                   className="w-full px-3 py-2 border rounded bg-gray-200 text-black"
                   placeholder="O RG do colaborador"
                 />
@@ -87,7 +119,7 @@ const ModalCreateCollaborator: React.FC<ModalProps> = ({ isOpen, onClose, onSubm
                   type="email"
                   name="collaborator.email"
                   value={collaboratorData.collaborator.email}
-                  onChange={handleInputChange}
+                  onChange={handleChange}
                   className="w-full px-3 py-2 border rounded bg-gray-200 text-black"
                   placeholder="O email do colaborador"
                 />
@@ -101,9 +133,9 @@ const ModalCreateCollaborator: React.FC<ModalProps> = ({ isOpen, onClose, onSubm
                   <label className="block text-gray-200">Número da CNH</label>
                   <input
                     type="text"
-                    name="driver.cnh_number"
-                    value={collaboratorData.driver.cnh_number}
-                    onChange={handleInputChange}
+                    name="driver.cnhNumber"
+                    value={collaboratorData.driver.cnhNumber}
+                    onChange={handleChange}
                     className="w-full px-3 py-2 border rounded bg-gray-200 text-black"
                     placeholder="Número da CNH"
                   />
@@ -112,23 +144,29 @@ const ModalCreateCollaborator: React.FC<ModalProps> = ({ isOpen, onClose, onSubm
                   <label className="block text-gray-200 ">Expiração CNH</label>
                   <input
                     type="text"
-                    name="driver.cnh_expiration_date"
-                    value={collaboratorData.driver.cnh_expiration_date}
-                    onChange={handleInputChange}
+                    name="driver.cnhExpirationDate"
+                    value={collaboratorData.driver.cnhExpirationDate}
+                    onChange={handleChange}
                     className="w-full px-3 py-2 border rounded bg-gray-200 text-black"
                     placeholder="Data de expiração da CNH"
                   />
                 </div>
                 <div className="mb-4 w-72">
                   <label className="block text-gray-200 ">Tipo CNH</label>
-                  <input
-                    type="text"
-                    name="driver.id_cnh_type"
-                    value={collaboratorData.driver.id_cnh_type}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border rounded bg-gray-200 text-black"
-                    placeholder="Tipo da CNH"
-                  />
+                  <select className="w-full px-3 py-2 border rounded bg-gray-200 text-black" name="driver.idCnhType" value={selectedCnhType?.id || ''} onChange={handleChange}>
+                    {selectedCnhType && (
+                      <option value={selectedCnhType.id}>
+                        {selectedCnhType.description}
+                      </option>
+                    )}
+                    {allCnhTypes && allCnhTypes
+                      .filter(cnhType => cnhType.id !== selectedCnhType?.id)
+                      .map((cnhType) => (
+                        <option key={cnhType.id} value={cnhType.id}>
+                          {cnhType.description}
+                        </option>
+                      ))}
+                  </select>
                 </div>
               </div>
             </div>

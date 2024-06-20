@@ -28,8 +28,15 @@ interface CreateCollaboratorData {
     email: string,
   };
   driver: {
-    cnh_number: string,
-    cnh_expiration_date: string,
-    id_cnh_type: string,
+    cnhNumber: string,
+    cnhExpirationDate: string,
+    idCnhType: string,
+    collaboratorId: string,
   };
+}
+
+interface CnhType {
+  id: string,
+  code: string,
+  description: string
 }

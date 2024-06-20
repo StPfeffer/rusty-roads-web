@@ -35,8 +35,8 @@ export class DriverService {
     return axiosInstance.delete("/v1/collaborators/" + collaboratorId + "/drivers");
   }
 
-  create(collaboratorId: string, data: any) {
-    return axiosInstance.post("/v1/collaborators/" + collaboratorId + "/driver", data);
+  create(data: any) {
+    return axiosInstance.post("/v1/collaborators/drivers", data);
   }
 
 }
