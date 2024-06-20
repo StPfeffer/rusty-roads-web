@@ -15,4 +15,16 @@ export class RouteService {
     return axiosInstance.get("/v1/routes/" + id);
   }
 
+  create(data: any) {
+    return axiosInstance.post("/v1/routes", data);
+  }
+
+  update(id: string, data: any) {
+    return axiosInstance.put("/v1/routes/" + id, data);
+  }
+
+  delete(id: string) {
+    return axiosInstance.delete("/v1/routes/" + id);
+  }
+
 }
