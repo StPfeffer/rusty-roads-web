@@ -1,15 +1,14 @@
 "use client"
 
 import { deleteRoute } from '@/actions/route/deleteRoute';
-import { fetchRoute, fetchRoutes } from '@/actions/route/fetchRoutes';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
-import { Route } from '@mui/icons-material';
 import Link from 'next/link';
 import SeeMoreButton from '@/components/button/SeeMoreButton';
 import TrashButton from '@/components/button/TrashButton';
-import { createRoute } from '@/actions/route/createRoute';
-import ModalCreateRoute from '@/components/route/ModalCreateRoute';
+import { createRandomRoute } from '@/actions/route/createRoute';
+import ModalCreateRoute from '@/components/route/modalCreateRoute';
+import { fetchRoutes } from '@/actions/route/fetchRoutes';
 
 const RoutesPage = () => {
   const [routes, setRoutes] = useState<Route[]>([]);
@@ -34,12 +33,13 @@ const RoutesPage = () => {
   const closeModal = () => setIsModalOpen(false);
 
   const handleCreate = async (routeData: CreateRouteData) => {
-    const createVehicleResponse = await createRoute(routeData);
+    const createRandomRouteResponse = await createRandomRoute(routeData);
 
-    if (createVehicleResponse.error) {
-      toast.error(createVehicleResponse.error.message, { id: 'create-error' });
+    if (createRandomRouteResponse.error) {
+      toast.error(createRandomRouteResponse.error.message, { id: 'update-route-error' });
     } else {
-      toast.success("Route created successfully");
+      toast.success('Route updated successfully!');
+      window.location.reload();
     }
 
     closeModal();
@@ -144,7 +144,7 @@ const RoutesPage = () => {
             </th>
             <th className="font-semibold p-2 text-left">Início da rota</th>
             <th className="font-semibold p-2 text-left">Final da rota</th>
-            <th className="font-semibold p-2 text-left">Total de KMs</th>
+            <th className="font-semibold p-2 text-left">Distância</th>
             <th className="font-semibold p-2 text-right">Ações</th>
           </tr>
         </thead>

@@ -1,6 +1,6 @@
 import { fetchDrivers } from "@/actions/collaborator/fetchDrivers";
 import { fetchVehicles } from "@/actions/vehicle/fetchVehicles";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 interface ModalProps {
@@ -13,10 +13,13 @@ const ModalCreateRoute: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) =
   const [allDrivers, setAllDrivers] = useState<Driver[] | null>([]);
   const [allVehicles, setAllVehicles] = useState<Vehicle[] | null>([]);
 
+  const [selectedDriver, setSelectedDriver] = useState<Driver | null>(null);
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
+
   const [routeData, setRouteData] = useState<CreateRouteData>({
     route: {
-      driver_id: '',
-      vehicle_id: '',
+      driverId: '',
+      vehicleId: '',
     }
   });
 
@@ -46,8 +49,23 @@ const ModalCreateRoute: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) =
 
   if (!isOpen) return null;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
+    switch (name) {
+      case 'driverId':
+        const selectedDriver = allDrivers?.find(driver => driver.id === value);
+        console.log(selectedDriver);
+        setSelectedDriver(selectedDriver ? selectedDriver : null);
+        break;
+      case 'vehicleId':
+        const selectedVehicle = allVehicles?.find(vehicle => vehicle.id === value);
+        setSelectedVehicle(selectedVehicle ? selectedVehicle : null);
+        break;
+      default:
+        break;
+    }
+
     const [section, field] = name.split('.');
     setRouteData((prevState) => ({
       ...prevState,
@@ -56,7 +74,7 @@ const ModalCreateRoute: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) =
         [field]: value,
       },
     }));
-  };
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,40 +92,38 @@ const ModalCreateRoute: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) =
               <div className="mb-4">
                 <label className="block text-gray-200">Veículo</label>
 
-                {/* <select id="mySelect" className="w-full px-3 py-2 border rounded bg-gray-200 text-black">
-                  <option value="1">Opção 1</option>
-                  <option value="2">Opção 2</option>
-                  <option value="3">Opção 3</option>
-                </select>    */}
-
-                <input
-                  type="select"
-                  name="route.vehicle_id"
-                  value={routeData.route.vehicle_id}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border rounded bg-gray-200 text-black"
-                  placeholder="Nome do veículo"
-                />
+                <select className="w-full px-3 py-2 border rounded bg-gray-200 text-black"  name="route.vehicleId" value={selectedVehicle?.id || ''} onChange={handleChange}>
+                  {selectedVehicle && (
+                    <option value={selectedVehicle.id}>
+                      {selectedVehicle.name}
+                    </option>
+                  )}
+                  {allVehicles && allVehicles
+                    .filter(vehicle => vehicle.id !== selectedVehicle?.id)
+                    .map((vehicle) => (
+                      <option key={vehicle.id} value={vehicle.id}>
+                        {vehicle.name}
+                      </option>
+                    ))}
+                </select> 
               </div>
               <div className="mb-4">
                 <label className="block text-gray-200">Motorista</label>
 
-                <select className="w-full" name="driverId" value=''>
-                  {allDrivers && allDrivers.map((thisDriver) => (
-                      <option key={thisDriver.id} value={thisDriver.id}>
-                        {thisDriver.name}
+                <select className="w-full px-3 py-2 border rounded bg-gray-200 text-black"  name="route.driverId" value={selectedDriver?.id || ''} onChange={handleChange}>
+                  {selectedDriver && (
+                    <option value={selectedDriver.id}>
+                      {selectedDriver.name}
+                    </option>
+                  )}
+                  {allDrivers && allDrivers
+                    .filter(driver => driver.id !== selectedDriver?.id)
+                    .map((driver) => (
+                      <option key={driver.id} value={driver.id}>
+                        {driver.name}
                       </option>
                     ))}
                 </select>
-
-                <input
-                  type="number"
-                  name="collaborator.cpf"
-                  value={routeData.route.driver_id}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border rounded bg-gray-200 text-black"
-                  placeholder="Nome do Motorista"
-                />
               </div>
             </div>
             <div className="flex justify-end">

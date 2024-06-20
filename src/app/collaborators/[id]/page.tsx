@@ -153,7 +153,7 @@ const SingleCollaboratorPage: React.FC<Props> = ({ params }) => {
 
         <div className="mt-4 flex">
           <p className="text-slate-400">Criado em: {formatDate(collaborator.createdAt)}</p>
-          <p className="pl-4 text-slate-400">Colaborador atualizado em: {formatDate(collaborator.updatedAt)}</p>
+          <p className="pl-4 text-slate-400">Atualizado em: {formatDate(collaborator.updatedAt)}</p>
         </div>
       </div>
     </div>

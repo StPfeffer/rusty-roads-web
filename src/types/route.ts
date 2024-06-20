@@ -29,7 +29,7 @@ interface RouteStatus {
 
 interface CreateRouteData {
   route: {
-    driver_id: string,
-    vehicle_id: string,
+    driverId: string,
+    vehicleId: string,
   };
 }

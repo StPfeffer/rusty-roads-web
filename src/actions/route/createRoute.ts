@@ -9,7 +9,17 @@ export const createRoute = async (routeData: CreateRouteData): Promise<ActionRes
   try {
     const route = await routeService.create(routeData.route);
 
-    const routeId: string = route.data.id;
+    return { success: { message: "Route created successfully" } }
+  } catch (error: any) {
+    return { error: { message: error.message } };
+  }
+
+};
+
+export const createRandomRoute = async (routeData: CreateRouteData): Promise<ActionResponse> => {
+  try {
+    console.log(routeData);
+    await routeService.createRandom(routeData.route);
 
     return { success: { message: "Route created successfully" } }
   } catch (error: any) {

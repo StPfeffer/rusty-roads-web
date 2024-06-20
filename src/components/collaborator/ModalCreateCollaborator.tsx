@@ -84,7 +84,7 @@ const ModalCreateCollaborator: React.FC<ModalProps> = ({ isOpen, onClose, onSubm
               <div className="mb-4">
                 <label className="block text-gray-200">Email</label>
                 <input
-                  type="number"
+                  type="email"
                   name="collaborator.email"
                   value={collaboratorData.collaborator.email}
                   onChange={handleInputChange}

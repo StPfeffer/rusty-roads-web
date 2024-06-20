@@ -19,6 +19,10 @@ export class RouteService {
     return axiosInstance.post("/v1/routes", data);
   }
 
+  createRandom(data: any) {
+    return axiosInstance.post("/v1/routes/random", data);
+  }
+
   update(id: string, data: any) {
     return axiosInstance.put("/v1/routes/" + id, data);
   }
