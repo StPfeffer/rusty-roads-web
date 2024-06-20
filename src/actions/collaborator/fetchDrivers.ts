@@ -8,7 +8,7 @@ export const fetchDrivers = async (): Promise<ActionResponse> => {
   try {
     const drivers = await driverService.list();
 
-    return { success: { message: "", data: drivers.data.collaborators as Driver[] } };
+    return { success: { message: "", data: drivers.data.drivers as Driver[] } };
   } catch (error) {
     return { error: { message: "An error occurred when trying to search for drivers, please try again later", data: [] } };
   }
