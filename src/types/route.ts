@@ -14,7 +14,9 @@ interface Route {
   statusId: string,
   status: RouteStatus,
   initialAddressId: string,
+  initialAddress: Address,
   finalAddressId: string,
+  finalAddress: Address,
   vehicleId: string,
   vehicle: Vehicle
 }
@@ -27,30 +29,7 @@ interface RouteStatus {
 
 interface CreateRouteData {
   route: {
-    started_at: string,
-    ended_at: string,
-    total_distance: number,
-    created_at: string,
-    updated_at: string,
-    initial_lat: number,
-    initial_long: number,
-    final_lat: number,
-    final_long: number,
-    driver: Driver,
-    status: RouteStatus,
-    initialAddress: Address,
-    finalAddress: Address,
-    vehicle: Vehicle,
-  };
-  document: {
-    chassisNumber: string,
-    exerciseYear: string | number,
-    modelYear: string | number,
-    manufactureYear: string | number,
-    registrationNumber: string,
-    color: string,
-    make: string,
-    model: string,
-    plate: string,
+    driver_id: string,
+    vehicle_id: string,
   };
 }

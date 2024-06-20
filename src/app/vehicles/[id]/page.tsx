@@ -89,8 +89,12 @@ const SingleVehiclePage: React.FC<Props> = ({ params }) => {
   };
 
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return format(date, 'dd/MM/yyyy HH:mm:ss');
+    if (dateString) {
+      const date = new Date(dateString);
+      return format(date, 'dd/MM/yyyy HH:mm:ss');
+    }
+
+    return '';
   };
 
   if (!vehicle) {

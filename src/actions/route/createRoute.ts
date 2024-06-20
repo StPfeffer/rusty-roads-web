@@ -1,30 +1,17 @@
-"use server";
+"use server"
 
-import { VehicleDocumentService, VehicleService } from "@/services/VehicleService";
 
-const vehicleService = new VehicleService();
-const vehicleDocumentService = new VehicleDocumentService();
+import { RouteService } from "@/services/RouteService";
 
-export const createVehicle = async (vehicleData: CreateVehicleData): Promise<ActionResponse> => {
+const routeService = new RouteService();
+
+export const createRoute = async (routeData: CreateRouteData): Promise<ActionResponse> => {
   try {
-    vehicleData.vehicle.initialMileage = parseInt(vehicleData.vehicle.initialMileage.toString());
-    vehicleData.document.exerciseYear = parseInt(vehicleData.document.exerciseYear.toString());
-    vehicleData.document.modelYear = parseInt(vehicleData.document.modelYear.toString());
-    vehicleData.document.manufactureYear = parseInt(vehicleData.document.manufactureYear.toString());
+    const route = await routeService.create(routeData.route);
 
-    const vehicle = await vehicleService.create(vehicleData.vehicle);
+    const routeId: string = route.data.id;
 
-    const vehicleId: string = vehicle.data.id;
-
-    try {
-      await vehicleDocumentService.create(vehicleId, vehicleData.document);
-    } catch (error: any) {
-      await vehicleService.delete(vehicleId);
-
-      throw new Error(error.response?.data?.error?.message || 'Failed to create vehicle document');
-    }
-
-    return { success: { message: "Vehicle created successfully" } }
+    return { success: { message: "Route created successfully" } }
   } catch (error: any) {
     return { error: { message: error.message } };
   }

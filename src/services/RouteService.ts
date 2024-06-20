@@ -27,16 +27,4 @@ export class RouteService {
     return axiosInstance.delete("/v1/routes/" + id);
   }
 
-  listStatus() {
-    return axios.get("/v1/routes/status");
-  }
-
-  findStatusById(id: string) {
-    return axios.get("/v1/routes/status/" + id);
-  }
-
-  findStatusByRouteId(id: string) {
-    return axios.get("/v1/routes/" + id + "/status");
-  }
-
 }

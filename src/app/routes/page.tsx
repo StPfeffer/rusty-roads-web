@@ -8,6 +8,8 @@ import { Route } from '@mui/icons-material';
 import Link from 'next/link';
 import SeeMoreButton from '@/components/button/SeeMoreButton';
 import TrashButton from '@/components/button/TrashButton';
+import { createRoute } from '@/actions/route/createRoute';
+import ModalCreateRoute from '@/components/route/ModalCreateRoute';
 
 const RoutesPage = () => {
   const [routes, setRoutes] = useState<Route[]>([]);
@@ -28,28 +30,28 @@ const RoutesPage = () => {
     fetchData();
   }, []);
 
-  // const openModal = () => setIsModalOpen(true);
-  // const closeModal = () => setIsModalOpen(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
-  // const handleCreate = async (routeData: CreateRouteData) => {
-  //   const createVehicleResponse = await createRoute(routeData);
+  const handleCreate = async (routeData: CreateRouteData) => {
+    const createVehicleResponse = await createRoute(routeData);
 
-  //   if (createVehicleResponse.error) {
-  //     toast.error(createVehicleResponse.error.message, { id: 'create-error' });
-  //   } else {
-  //     toast.success("Vehicle created successfully");
-  //   }
+    if (createVehicleResponse.error) {
+      toast.error(createVehicleResponse.error.message, { id: 'create-error' });
+    } else {
+      toast.success("Route created successfully");
+    }
 
-  //   closeModal();
-  //   const fetchRoutesResponse = await fetchRoutes();
+    closeModal();
+    const fetchRoutesResponse = await fetchRoutes();
 
-  //   if (fetchRoutesResponse.error) {
-  //     toast.error(fetchRoutesResponse.error.message, { id: 'fetch-error' });
-  //     setRoutes(fetchRoutesResponse.error.data);
-  //   } else {
-  //     setRoutes(fetchRoutesResponse?.success?.data);
-  //   }
-  // };
+    if (fetchRoutesResponse.error) {
+      toast.error(fetchRoutesResponse.error.message, { id: 'fetch-error' });
+      setRoutes(fetchRoutesResponse.error.data);
+    } else {
+      setRoutes(fetchRoutesResponse?.success?.data);
+    }
+  };
 
   const handleDelete = async (routeId: string) => {
     if (confirm("Are you sure you want to delete this route?")) {
@@ -118,6 +120,12 @@ const RoutesPage = () => {
   return (
 <div className="bg-[color:var(--bgSoft)] p-5 mt-5 rounded-lg">
       <div className="flex justify-between items-center">
+        <button
+          className="p-2.5 bg-[#5D57C9] border-none pointer rounded text-[color:var(--text)]"
+          onClick={openModal}
+        >
+          Adicionar
+        </button>
         {selectedRoutes.size > 0 && (
           <button
             className="p-2.5 bg-red-500 border-none pointer rounded text-[color:var(--text)]"
@@ -127,6 +135,7 @@ const RoutesPage = () => {
           </button>
         )}
       </div>
+      {isModalOpen && <ModalCreateRoute isOpen={isModalOpen} onClose={closeModal} onSubmit={handleCreate} />}
       <table className="w-full">
         <thead className="w-full">
           <tr className="w-full">

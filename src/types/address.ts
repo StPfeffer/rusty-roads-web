@@ -4,7 +4,7 @@ interface Address {
   neighbourhood: string
   reference: string,
   complement: string,
-  zip_code: string
+  zipCode: string
   latitude: number,
   longitude: number,
   city: City

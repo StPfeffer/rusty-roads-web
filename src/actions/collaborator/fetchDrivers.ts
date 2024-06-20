@@ -10,7 +10,18 @@ export const fetchDrivers = async (): Promise<ActionResponse> => {
   try {
     const drivers = await driverService.list();
 
-    return { success: { message: "", data: drivers.data.drivers as Driver[] } };
+    const updatedDrivers = await Promise.all(
+      drivers.data.drivers.map(async (driver: Driver) => {
+        const collaboratorResponse = await collaboratorService.findById(driver.collaboratorId);
+        const collaborator = collaboratorResponse.data as Collaborator;
+        return {
+          ...driver,
+          name: collaborator.name
+        };
+      })
+    );
+
+    return { success: { message: "", data: updatedDrivers as Driver[] } };
   } catch (error) {
     return { error: { message: "An error occurred when trying to search for drivers, please try again later", data: [] } };
   }
@@ -32,6 +43,9 @@ export const fetchDriverByCollaboratorId = async (collaboratorId: string): Promi
 export const fetchDriver = async (driverId: string): Promise<ActionResponse> => {
   try {
     const driver = await driverService.findById(driverId);
+    const collaborator = await collaboratorService.findById(driver.data.collaboratorId);
+
+    (driver.data as Driver).name = (collaborator.data as Collaborator).name;
 
     return { success: { message: "", data: driver.data as Driver } };
   } catch (error: any) {
